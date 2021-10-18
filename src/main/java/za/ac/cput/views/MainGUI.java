@@ -7,6 +7,8 @@ package za.ac.cput.views;
  * 17 October 2021
  */
 
+import za.ac.cput.views.physical.BuildingMainGUI;
+import za.ac.cput.views.physical.RoomMainGUI;
 import za.ac.cput.views.student.StudentMainGUI;
 
 import javax.swing.*;
@@ -15,6 +17,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MainGUI extends JFrame implements ActionListener {
+
     private JButton btnStudent, btnExamination, btnScheduledClass,
             btnCourse, btnDepartment, btnBuilding, btnRoom,
             btnLecturer, btnSubject, btnSemester, btnEnroll;
@@ -23,6 +26,7 @@ public class MainGUI extends JFrame implements ActionListener {
     public Font hFt;
 
     public MainGUI() {
+
         super("College Management Application");
 
         pN = new JPanel();
@@ -46,6 +50,7 @@ public class MainGUI extends JFrame implements ActionListener {
     }
 
     public void setGUI() {
+
         pN.setLayout(new FlowLayout(FlowLayout.CENTER));
         pC.setLayout(new GridLayout(11, 1));
 
@@ -90,8 +95,11 @@ public class MainGUI extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+
         switch(e.getActionCommand()) {
             case "Building":
+                BuildingMainGUI.main(null);
+                this.setVisible(false);
                 break;
             case "Course":
                 break;
@@ -104,6 +112,8 @@ public class MainGUI extends JFrame implements ActionListener {
             case "Lecturer":
                 break;
             case "Room":
+                RoomMainGUI.main(null);
+                this.setVisible(false);
                 break;
             case "Scheduled Class":
                 break;
