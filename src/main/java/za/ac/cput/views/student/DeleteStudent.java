@@ -4,26 +4,21 @@ import com.google.gson.Gson;
 import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.web.bind.annotation.PathVariable;
 import za.ac.cput.entity.person.Student;
-import za.ac.cput.factory.person.StudentFactory;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class DeleteStudent extends JFrame implements ActionListener {
     private static OkHttpClient client = new OkHttpClient();
 
     private JTable table;
-    private JPanel pN, pC, pS;
+    private JPanel pC, pS;
     private JButton btnDelete, btnBack;
     private JLabel lblDelete, blank1, blank2, blank3, blank4;
     private JTextField txtDeleteId;
@@ -32,7 +27,6 @@ public class DeleteStudent extends JFrame implements ActionListener {
         super("Delete Student");
         table = new JTable();
 
-        pN = new JPanel();
         pC = new JPanel();
         pS = new JPanel();
 
@@ -49,7 +43,6 @@ public class DeleteStudent extends JFrame implements ActionListener {
     }
 
     public void setGUI() {
-        //pN.setLayout(new GridLayout(1,1));
         pC.setLayout(new GridLayout(1,1));
         pS.setLayout(new GridLayout(4,2));
 
@@ -69,7 +62,6 @@ public class DeleteStudent extends JFrame implements ActionListener {
 
         displayTable();
 
-        //this.add(pN, BorderLayout.NORTH);
         this.add(pC, BorderLayout.CENTER);
         this.add(pS, BorderLayout.SOUTH);
 

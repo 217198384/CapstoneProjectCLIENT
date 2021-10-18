@@ -1,6 +1,5 @@
 package za.ac.cput.views.student;
 
-import za.ac.cput.entity.person.Student;
 import za.ac.cput.views.MainGUI;
 
 import javax.swing.*;
