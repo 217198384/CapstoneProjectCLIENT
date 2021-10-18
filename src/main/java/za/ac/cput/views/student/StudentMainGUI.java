@@ -1,6 +1,5 @@
 package za.ac.cput.views.student;
 
-import za.ac.cput.entity.person.Student;
 import za.ac.cput.views.MainGUI;
 
 import javax.swing.*;
@@ -69,22 +68,22 @@ public class StudentMainGUI extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         switch(e.getActionCommand()) {
-//            case "View All Students":
-//                GetStudents.main(null);
-//                this.setVisible(false);
-//                break;
+            case "View All Students":
+                GetStudents.main(null);
+                this.setVisible(false);
+                break;
             case "Add New Student":
                 AddStudent.main(null);
                 this.setVisible(false);
                 break;
-//            case "Update Student":
-//                UpdateStudent.main(null);
-//                this.setVisible(false);
-//                break;
-//            case "Delete Student":
-//                DeleteStudent.main(null);
-//                this.setVisible(false);
-//                break;
+            case "Update Student":
+                UpdateStudent.main(null);
+                this.setVisible(false);
+                break;
+            case "Delete Student":
+                DeleteStudent.main(null);
+                this.setVisible(false);
+                break;
             case "Back":
                 MainGUI.main(null);
                 this.setVisible(false);
