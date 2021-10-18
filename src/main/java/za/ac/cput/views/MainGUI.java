@@ -1,5 +1,12 @@
 package za.ac.cput.views;
 
+/**
+ * MainGUI.java
+ * Front end GUI for Main Menu
+ * @author Dylan Koevort 218088159
+ * 17 October 2021
+ */
+
 import za.ac.cput.views.student.StudentMainGUI;
 
 import javax.swing.*;
