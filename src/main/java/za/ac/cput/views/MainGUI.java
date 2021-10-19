@@ -7,11 +7,13 @@ package za.ac.cput.views;
  * 17 October 2021
  */
 
+import za.ac.cput.views.person.lecturer.LecturerMenuGUI;
 import za.ac.cput.views.physical.BuildingMainGUI;
 import za.ac.cput.views.physical.RoomMainGUI;
-import za.ac.cput.views.student.StudentMainGUI;
+import za.ac.cput.views.person.student.StudentMainGUI;
 import za.ac.cput.views.tertiaryInstitution.Course.CourseMainGUI;
 import za.ac.cput.views.tertiaryInstitution.Department.DepartmentMainGUI;
+import za.ac.cput.views.curriculum.subject.SubjectMenuGUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -116,6 +118,8 @@ public class MainGUI extends JFrame implements ActionListener {
             case "Examination":
                 break;
             case "Lecturer":
+                LecturerMenuGUI.main(null);
+                this.setVisible(false);
                 break;
             case "Room":
                 RoomMainGUI.main(null);
@@ -130,6 +134,8 @@ public class MainGUI extends JFrame implements ActionListener {
                 this.setVisible(false);
                 break;
             case "Subject":
+                SubjectMenuGUI.main(null);
+                this.setVisible(false);
                 break;
         }
     }

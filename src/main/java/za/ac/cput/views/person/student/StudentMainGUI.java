@@ -1,4 +1,4 @@
-package za.ac.cput.views.student;
+package za.ac.cput.views.person.student;
 
 import za.ac.cput.views.MainGUI;
 
