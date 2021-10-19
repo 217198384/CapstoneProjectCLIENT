@@ -1,6 +1,7 @@
 package za.ac.cput.factory.curriculum;
 
 import za.ac.cput.entity.curriculum.ScheduledClass;
+import za.ac.cput.util.GenericHelper;
 
 /**
  * Dinelle Kotze
@@ -11,15 +12,17 @@ import za.ac.cput.entity.curriculum.ScheduledClass;
 
 public class ScheduledClassFactory
 {
-    public static ScheduledClass build (String scheduledClassId, int subjectCode, int roomCode, String classTime)
+    public static ScheduledClass build (int subjectCode, int roomCode, String classTime)
     {
-        if (scheduledClassId.isEmpty() || subjectCode <= 0 || roomCode <= 0 || classTime.isEmpty())
+        if (subjectCode <= 0 || roomCode <= 0 || classTime.isEmpty())
         {
             return null;
         }
 
+        String id = GenericHelper.generateRandom();
+
         return new ScheduledClass.Builder()
-                .setScheduledClassId(scheduledClassId)
+                .setScheduledClassId(id)
                 .setSubjectCode(subjectCode)
                 .setRoomCode(roomCode)
                 .setClassTime(classTime)
