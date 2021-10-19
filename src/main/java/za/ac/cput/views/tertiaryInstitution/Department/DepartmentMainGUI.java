@@ -1,4 +1,4 @@
-package za.ac.cput.views.physical;
+package za.ac.cput.views.tertiaryInstitution.Department;
 
 import za.ac.cput.views.MainGUI;
 
@@ -7,34 +7,32 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class BuildingMainGUI extends JFrame implements ActionListener {
+public class DepartmentMainGUI extends JFrame implements ActionListener {
 
     private JButton btnView, btnAdd, btnUpdate, btnDelete, btnBack;
     private JLabel lblHeading;
     private JPanel pN, pC, pS;
     private Font hFt;
 
-    public BuildingMainGUI() {
-
-        super("Buildings Main Menu");
+    public DepartmentMainGUI(){
+        super("Department Main Menu");
 
         pN = new JPanel();
         pC = new JPanel();
         pS = new JPanel();
 
-        btnView = new JButton("View All Buildings");
-        btnAdd = new JButton("Add New Buildings");
-        btnUpdate = new JButton("Update Buildings");
-        btnDelete = new JButton("Delete Buildings");
+        btnView = new JButton("View All Departments");
+        btnAdd = new JButton("Add New Department");
+        btnUpdate = new JButton("Update Department");
+        btnDelete = new JButton("Delete Department");
         btnBack = new JButton("Back");
 
-        lblHeading = new JLabel("Buildings", SwingConstants.CENTER);
+        lblHeading = new JLabel("Department", SwingConstants.CENTER);
 
         hFt = new Font("Arial", Font.BOLD, 30);
     }
 
     public void setGUI() {
-
         pN.setLayout(new FlowLayout(FlowLayout.CENTER));
         pC.setLayout(new GridLayout(4, 1));
         pS.setLayout(new GridLayout(1, 1));
@@ -68,25 +66,29 @@ public class BuildingMainGUI extends JFrame implements ActionListener {
         this.setLocationRelativeTo(null);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
+        switch(e.getActionCommand()) {
+            case "View All Departments":
+                GetDepartment.main(null);
+                this.setVisible(false);
+                break;
 
-        switch (e.getActionCommand()) {
-            case "View All Buildings":
-                GetBuildingGUI.main(null);
+           case "Add New Department":
+                AddDepartment.main(null);
                 this.setVisible(false);
                 break;
-            case "Add New Buildings":
-                AddBuildingGUI.main(null);
+
+            case "Update Department":
+                UpdateDepartment.main(null);
                 this.setVisible(false);
                 break;
-            case "Update Buildings":
-                UpdateBuildingGUI.main(null);
+
+            case "Delete Department":
+                DeleteDepartment.main(null);
                 this.setVisible(false);
                 break;
-            case "Delete Buildings":
-                DeleteBuildingGUI.main(null);
-                this.setVisible(false);
-                break;
+
             case "Back":
                 MainGUI.main(null);
                 this.setVisible(false);
@@ -95,7 +97,6 @@ public class BuildingMainGUI extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
-
-        new BuildingMainGUI().setGUI();
+        new DepartmentMainGUI().setGUI();
     }
 }

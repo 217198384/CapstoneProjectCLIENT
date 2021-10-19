@@ -8,10 +8,14 @@ package za.ac.cput.views;
  */
 
 import za.ac.cput.views.examination.ExaminationMainGUI;
+import za.ac.cput.views.scheduledClass.ScheduledClassMainGUI;
+import za.ac.cput.views.person.lecturer.LecturerMenuGUI;
 import za.ac.cput.views.physical.BuildingMainGUI;
 import za.ac.cput.views.physical.RoomMainGUI;
-import za.ac.cput.views.scheduledClass.ScheduledClassMainGUI;
-import za.ac.cput.views.student.StudentMainGUI;
+import za.ac.cput.views.person.student.StudentMainGUI;
+import za.ac.cput.views.tertiaryInstitution.Course.CourseMainGUI;
+import za.ac.cput.views.tertiaryInstitution.Department.DepartmentMainGUI;
+import za.ac.cput.views.curriculum.subject.SubjectMenuGUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -104,8 +108,12 @@ public class MainGUI extends JFrame implements ActionListener {
                 this.setVisible(false);
                 break;
             case "Course":
+                CourseMainGUI.main(null);
+                this.setVisible(false);
                 break;
             case "Department":
+                DepartmentMainGUI.main(null);
+                this.setVisible(false);
                 break;
             case "Enroll":
                 break;
@@ -114,6 +122,8 @@ public class MainGUI extends JFrame implements ActionListener {
                 this.setVisible(false);
                 break;
             case "Lecturer":
+                LecturerMenuGUI.main(null);
+                this.setVisible(false);
                 break;
             case "Room":
                 RoomMainGUI.main(null);
@@ -130,6 +140,8 @@ public class MainGUI extends JFrame implements ActionListener {
                 this.setVisible(false);
                 break;
             case "Subject":
+                SubjectMenuGUI.main(null);
+                this.setVisible(false);
                 break;
         }
     }

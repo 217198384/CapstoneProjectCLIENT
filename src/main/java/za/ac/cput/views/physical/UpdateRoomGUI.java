@@ -1,17 +1,10 @@
-package za.ac.cput.views.student;
-
-/**
- * UpdateStudent.java
- * Front end GUI for updating a student
- * @author Dylan Koevort 218088159
- * 18 October 2021
- */
+package za.ac.cput.views.physical;
 
 import com.google.gson.Gson;
 import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import za.ac.cput.entity.person.Student;
+import za.ac.cput.entity.physical.Room;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -21,9 +14,10 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.Objects;
 
-public class UpdateStudent extends JFrame implements ActionListener {
-    public static final MediaType JSON =
-            MediaType.get("application/json; charset=utf-8");
+public class UpdateRoomGUI extends JFrame implements ActionListener {
+
+    public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
+
     private static OkHttpClient client = new OkHttpClient();
 
     private JTable table;
@@ -31,12 +25,12 @@ public class UpdateStudent extends JFrame implements ActionListener {
     private JButton btnUpdate, btnBack, btnEnter;
     private JLabel lblUpdate, blank1, blank2, blank3, blank4,
             blank5, blank6, blank7, blank8,
-            lblName, lblSurname, lblAge, lblEmail, lblPhone;
-    private JTextField txtUpdateId, txtName,
-            txtSurname, txtAge, txtEmail, txtPhone;
+            lblRoomCode, lblRoomType, lblRoomCapacity, lblRoomFloor, lblBuildingID;
+    private JTextField txtUpdateId, txtRoomCode,
+            txtRoomType, txtRoomCapacity, txtRoomFloor, txtBuildingID;
 
-    public UpdateStudent() {
-        super("Update Student");
+    public UpdateRoomGUI() {
+        super("Update Rooms");
         table = new JTable();
 
         pN = new JPanel();
@@ -49,20 +43,20 @@ public class UpdateStudent extends JFrame implements ActionListener {
         btnBack = new JButton("Back");
         btnEnter = new JButton("Enter");
 
-        lblUpdate = new JLabel("Enter Student ID to Update: ", SwingConstants.CENTER);
+        lblUpdate = new JLabel("Enter Room Code to Update: ", SwingConstants.CENTER);
         txtUpdateId = new JTextField();
 
-        lblName = new JLabel("First Name: ", SwingConstants.CENTER);
-        lblSurname = new JLabel("Last Name: ", SwingConstants.CENTER);
-        lblAge = new JLabel("Age: ", SwingConstants.CENTER);
-        lblEmail = new JLabel("Email Address: ", SwingConstants.CENTER);
-        lblPhone = new JLabel("Phone Number: ", SwingConstants.CENTER);
+        lblRoomCode = new JLabel("Room Code: ", SwingConstants.CENTER);
+        lblRoomType = new JLabel("Room Type: ", SwingConstants.CENTER);
+        lblRoomCapacity = new JLabel("Room Capacity: ", SwingConstants.CENTER);
+        lblRoomFloor = new JLabel("Room Floor: ", SwingConstants.CENTER);
+        lblBuildingID = new JLabel("Building ID: ", SwingConstants.CENTER);
 
-        txtName = new JTextField();
-        txtSurname = new JTextField();
-        txtAge = new JTextField();
-        txtEmail = new JTextField();
-        txtPhone = new JTextField();
+        txtRoomCode = new JTextField();
+        txtRoomType = new JTextField();
+        txtRoomCapacity = new JTextField();
+        txtRoomFloor = new JTextField();
+        txtBuildingID = new JTextField();
 
         blank1 = new JLabel("");
         blank2 = new JLabel("");
@@ -92,16 +86,16 @@ public class UpdateStudent extends JFrame implements ActionListener {
         pUpdate.add(blank4);
         pUpdate.add(blank5);
 
-        pFields.add(lblName);
-        pFields.add(txtName);
-        pFields.add(lblSurname);
-        pFields.add(txtSurname);
-        pFields.add(lblAge);
-        pFields.add(txtAge);
-        pFields.add(lblEmail);
-        pFields.add(txtEmail);
-        pFields.add(lblPhone);
-        pFields.add(txtPhone);
+        pFields.add(lblRoomCode);
+        pFields.add(txtRoomCode);
+        pFields.add(lblRoomType);
+        pFields.add(txtRoomType);
+        pFields.add(lblRoomCapacity);
+        pFields.add(txtRoomCapacity);
+        pFields.add(lblRoomFloor);
+        pFields.add(txtRoomFloor);
+        pFields.add(lblBuildingID);
+        pFields.add(txtBuildingID);
 
         pC.add(pUpdate);
         pC.add(pFields);
@@ -131,31 +125,29 @@ public class UpdateStudent extends JFrame implements ActionListener {
 
     public void displayTable() {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
-        model.addColumn("Student ID");
-        model.addColumn("First Name");
-        model.addColumn("Last Name");
-        model.addColumn("Age");
-        model.addColumn("Email Address");
-        model.addColumn("Phone Number");
+        model.addColumn("Room Code");
+        model.addColumn("Room Type");
+        model.addColumn("Room Capacity");
+        model.addColumn("Room Floor");
+        model.addColumn("Building ID");
 
         try {
-            final String URL = "http://localhost:8080/student/getall";
+            final String URL = "http://localhost:8080/room/getall";
             String responseBody = run(URL);
-            JSONArray students = new JSONArray(responseBody);
+            JSONArray rooms = new JSONArray(responseBody);
 
-            for (int i = 0; i < students.length(); i++) {
-                JSONObject student = students.getJSONObject(i);
+            for (int i = 0; i < rooms.length(); i++) {
+                JSONObject room = rooms.getJSONObject(i);
 
                 Gson g = new Gson();
-                Student s = g.fromJson(student.toString(), Student.class);
+                Room r = g.fromJson(room.toString(), Room.class);
 
-                Object[] rowData = new Object[6];
-                rowData[0] = s.getStudentId();
-                rowData[1] = s.getFirstName();
-                rowData[2] = s.getLastName();
-                rowData[3] = s.getAge();
-                rowData[4] = s.getEmailAddress();
-                rowData[5] = s.getContactNo();
+                Object[] rowData = new Object[5];
+                rowData[0] = r.getRoomCode();
+                rowData[1] = r.getRoomType();
+                rowData[2] = r.getRoomCapacity();
+                rowData[3] = r.getRoomFloor();
+                rowData[4] = r.getBuildingID();
                 model.addRow(rowData);
             }
         }
@@ -171,48 +163,49 @@ public class UpdateStudent extends JFrame implements ActionListener {
         }
     }
 
-    private Student getStudent(String id) throws IOException {
-        Student student = null;
+    private Room getRoom(String id) throws IOException {
+        Room room = null;
         try {
-            final String URL = "http://localhost:8080/student/read/" + id;
+            final String URL = "http://localhost:8080/room/read/" + id;
             String responseBody = run(URL);
             Gson gson = new Gson();
-            student = gson.fromJson(responseBody, Student.class);
+            room = gson.fromJson(responseBody, Room.class);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        System.out.println(student);
-        return student;
+        System.out.println(room);
+        return room;
     }
 
-    public void store(String fName, String lName, String ageString, String email, String phone) {
-        Student student = null;
+    public void store(String roomCode, String roomType, String stringRoomCapacity, String stringRoomFloor, String stringBuildingID) {
+        Room room = null;
         try {
-            final String URL = "http://localhost:8080/student/update";
-            int age = Integer.parseInt(ageString);
-            student = new Student.StudentBuilder()
-                    .setStudentId(txtUpdateId.getText())
-                    .setFirstName(txtName.getText())
-                    .setLastName(txtSurname.getText())
-                    .setAge(Integer.parseInt(txtAge.getText()))
-                    .setEmailAddress(txtEmail.getText())
-                    .setContactNo(txtPhone.getText())
+            final String URL = "http://localhost:8080/room/update";
+            int roomCapacity = Integer.parseInt(stringRoomCapacity);
+            int buildingID = Integer.parseInt(stringBuildingID);
+            int roomFloor = Integer.parseInt(stringRoomFloor);
+            room = new Room.RoomBuilder()
+                    .setRoomCode(txtUpdateId.getText())
+                    .setRoomType(txtRoomType.getText())
+                    .setRoomCapacity(Integer.parseInt(txtRoomCapacity.getText()))
+                    .setRoomFloor(Integer.parseInt(txtRoomFloor.getText()))
+                    .setBuildingID(Integer.parseInt(txtBuildingID.getText()))
                     .build();
             Gson g = new Gson();
-            String jsonString = g.toJson(student);
+            String jsonString = g.toJson(room);
             String r = post(URL, jsonString);
             System.out.println(r);
             if (r != null) {
-                JOptionPane.showMessageDialog(null, "Student updated successfully!");
-                StudentMainGUI.main(null);
+                JOptionPane.showMessageDialog(null, "Room updated successfully!");
+                RoomMainGUI.main(null);
                 this.setVisible(false);
             } else {
-                JOptionPane.showMessageDialog(null, "Oops, Student not updated.");
+                JOptionPane.showMessageDialog(null, "Oops, Room not updated.");
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
-        System.out.println(student);
+        System.out.println(room);
     }
 
     public String post(final String url, String json) throws IOException {
@@ -230,14 +223,14 @@ public class UpdateStudent extends JFrame implements ActionListener {
             case "Enter" :
                 if (!Objects.equals(txtUpdateId.getText(), "")) {
                     try {
-                        Student s = getStudent(txtUpdateId.getText());
-                        if(s != null) {
+                        Room r = getRoom(txtUpdateId.getText());
+                        if(r != null) {
                             pFields.setVisible(true);
-                            txtName.setText(s.getFirstName());
-                            txtSurname.setText(s.getLastName());
-                            txtAge.setText(String.valueOf(s.getAge()));
-                            txtEmail.setText(s.getEmailAddress());
-                            txtPhone.setText(s.getContactNo());
+                            txtRoomCode.setText(r.getRoomCode());
+                            txtRoomType.setText(r.getRoomType());
+                            txtRoomCapacity.setText(String.valueOf(r.getRoomCapacity()));
+                            txtRoomFloor.setText(String.valueOf(r.getRoomFloor()));
+                            txtBuildingID.setText(String.valueOf(r.getBuildingID()));
                         } else {
                             JOptionPane.showMessageDialog(null, "No Student with that ID");
                         }
@@ -249,20 +242,21 @@ public class UpdateStudent extends JFrame implements ActionListener {
                 }
                 break;
             case "Update" :
-                store(txtName.getText(),
-                        txtSurname.getText(),
-                        txtAge.getText(),
-                        txtEmail.getText(),
-                        txtPhone.getText());
+                store(txtRoomCode.getText(),
+                        txtRoomType.getText(),
+                        txtRoomCapacity.getText(),
+                        txtRoomFloor.getText(),
+                        txtBuildingID.getText());
                 break;
             case "Back" :
-                StudentMainGUI.main(null);
+                RoomMainGUI.main(null);
                 this.setVisible(false);
                 break;
         }
     }
 
     public static void main(String[] args) {
-        new UpdateStudent().setGUI();
+
+        new UpdateRoomGUI().setGUI();
     }
 }

@@ -1,32 +1,32 @@
-package za.ac.cput.views.student;
+package za.ac.cput.views.tertiaryInstitution.Course;
 
 import za.ac.cput.views.MainGUI;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class StudentMainGUI extends JFrame implements ActionListener {
+public class CourseMainGUI extends JFrame implements ActionListener {
+
     private JButton btnView, btnAdd, btnUpdate, btnDelete, btnBack;
     private JLabel lblHeading;
     private JPanel pN, pC, pS;
     private Font hFt;
 
-    public StudentMainGUI() {
-        super("Student Main Menu");
+    public CourseMainGUI(){
+        super("Course Main Menu");
 
         pN = new JPanel();
         pC = new JPanel();
         pS = new JPanel();
 
-        btnView = new JButton("View All Students");
-        btnAdd = new JButton("Add New Student");
-        btnUpdate = new JButton("Update Student");
-        btnDelete = new JButton("Delete Student");
+        btnView = new JButton("View All Courses");
+        btnAdd = new JButton("Add New Course");
+        btnUpdate = new JButton("Update Course");
+        btnDelete = new JButton("Delete Course");
         btnBack = new JButton("Back");
 
-        lblHeading = new JLabel("Student", SwingConstants.CENTER);
+        lblHeading = new JLabel("Course", SwingConstants.CENTER);
 
         hFt = new Font("Arial", Font.BOLD, 30);
     }
@@ -49,7 +49,6 @@ public class StudentMainGUI extends JFrame implements ActionListener {
 
         pS.add(btnBack);
 
-
         this.add(pN, BorderLayout.NORTH);
         this.add(pC, BorderLayout.CENTER);
         this.add(pS, BorderLayout.SOUTH);
@@ -60,6 +59,7 @@ public class StudentMainGUI extends JFrame implements ActionListener {
         btnDelete.addActionListener(this);
         btnBack.addActionListener(this);
 
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
         this.setVisible(true);
         this.setLocationRelativeTo(null);
@@ -67,23 +67,27 @@ public class StudentMainGUI extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        switch(e.getActionCommand()) {
-            case "View All Students":
-                GetStudents.main(null);
+        switch (e.getActionCommand()){
+            case "View All Courses":
+                GetCourse.main(null);
                 this.setVisible(false);
                 break;
-            case "Add New Student":
-                AddStudent.main(null);
+
+            case "Add new Course":
+                AddCourse.main(null);
                 this.setVisible(false);
                 break;
-            case "Update Student":
-                UpdateStudent.main(null);
+
+            case "Update Course":
+                UpdateCourse.main(null);
                 this.setVisible(false);
                 break;
-            case "Delete Student":
-                DeleteStudent.main(null);
+
+            case "Delete Course":
+                DeleteCourse.main(null);
                 this.setVisible(false);
                 break;
+
             case "Back":
                 MainGUI.main(null);
                 this.setVisible(false);
@@ -92,6 +96,7 @@ public class StudentMainGUI extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
-        new StudentMainGUI().setGUI();
+        new CourseMainGUI().setGUI();
     }
 }
+
