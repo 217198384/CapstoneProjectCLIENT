@@ -71,8 +71,20 @@ public class BuildingMainGUI extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         switch (e.getActionCommand()) {
+            case "View All Buildings":
+                GetBuildingGUI.main(null);
+                this.setVisible(false);
+                break;
             case "Add New Buildings":
                 AddBuildingGUI.main(null);
+                this.setVisible(false);
+                break;
+            case "Update Buildings":
+                UpdateBuildingGUI.main(null);
+                this.setVisible(false);
+                break;
+            case "Delete Buildings":
+                DeleteBuildingGUI.main(null);
                 this.setVisible(false);
                 break;
             case "Back":

@@ -72,8 +72,20 @@ public class RoomMainGUI extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         switch (e.getActionCommand()) {
+            case "View All Rooms":
+                GetRoomGUI.main(null);
+                this.setVisible(false);
+                break;
             case "Add New Rooms":
                 AddRoomGUI.main(null);
+                this.setVisible(false);
+                break;
+            case "Update Rooms":
+                UpdateRoomGUI.main(null);
+                this.setVisible(false);
+                break;
+            case "Delete Rooms":
+                DeleteRoomGUI.main(null);
                 this.setVisible(false);
                 break;
             case "Back":
