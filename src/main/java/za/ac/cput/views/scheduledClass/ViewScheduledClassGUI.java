@@ -1,5 +1,12 @@
 package za.ac.cput.views.scheduledClass;
 
+/**
+ * Dinelle Kotze
+ * 219089302
+ * ViewScheduledClassGUI.java
+ * This is the View Scheduled Class GUI for the Scheduled Class entity.
+ */
+
 import com.google.gson.Gson;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;

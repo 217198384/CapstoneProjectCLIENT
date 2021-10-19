@@ -1,5 +1,12 @@
 package za.ac.cput.views.examination;
 
+/**
+ * Dinelle Kotze
+ * 219089302
+ * ExaminationMainGUI.java
+ * This is the Main Examination GUI for the Examination entity.
+ */
+
 import za.ac.cput.views.MainGUI;
 
 import javax.swing.*;

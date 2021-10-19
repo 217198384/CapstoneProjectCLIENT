@@ -1,5 +1,12 @@
 package za.ac.cput.views.examination;
 
+/**
+ * Dinelle Kotze
+ * 219089302
+ * DeleteExaminationGUI.java
+ * This is the Delete Examination GUI for the Examination entity.
+ */
+
 import com.google.gson.Gson;
 import okhttp3.*;
 import org.json.JSONArray;

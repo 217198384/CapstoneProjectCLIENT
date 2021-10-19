@@ -1,5 +1,12 @@
 package za.ac.cput.views.scheduledClass;
 
+/**
+ * Dinelle Kotze
+ * 219089302
+ * ScheduledClassMainGUI.java
+ * This is the Main Scheduled Class GUI for the Scheduled Class entity.
+ */
+
 import za.ac.cput.views.MainGUI;
 
 import javax.swing.*;

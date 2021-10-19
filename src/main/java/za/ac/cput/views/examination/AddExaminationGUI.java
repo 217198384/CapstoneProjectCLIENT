@@ -1,5 +1,12 @@
 package za.ac.cput.views.examination;
 
+/**
+ * Dinelle Kotze
+ * 219089302
+ * AddExaminationGUI.java
+ * This is the Add Examination GUI for the Examination entity.
+ */
+
 import com.google.gson.Gson;
 import okhttp3.*;
 import za.ac.cput.entity.curriculum.Examination;

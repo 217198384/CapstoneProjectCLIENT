@@ -1,5 +1,12 @@
 package za.ac.cput.views.scheduledClass;
 
+/**
+ * Dinelle Kotze
+ * 219089302
+ * DeleteScheduledClassGUI.java
+ * This is the Delete Scheduled Class GUI for the Scheduled Class entity.
+ */
+
 import com.google.gson.Gson;
 import okhttp3.*;
 import org.json.JSONArray;
