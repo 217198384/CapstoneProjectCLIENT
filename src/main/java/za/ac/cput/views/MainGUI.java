@@ -10,6 +10,8 @@ package za.ac.cput.views;
 import za.ac.cput.views.physical.BuildingMainGUI;
 import za.ac.cput.views.physical.RoomMainGUI;
 import za.ac.cput.views.student.StudentMainGUI;
+import za.ac.cput.views.tertiaryInstitution.Course.CourseMainGUI;
+import za.ac.cput.views.tertiaryInstitution.Department.DepartmentMainGUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -102,8 +104,12 @@ public class MainGUI extends JFrame implements ActionListener {
                 this.setVisible(false);
                 break;
             case "Course":
+                CourseMainGUI.main(null);
+                this.setVisible(false);
                 break;
             case "Department":
+                DepartmentMainGUI.main(null);
+                this.setVisible(false);
                 break;
             case "Enroll":
                 break;
