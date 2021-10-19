@@ -1,4 +1,4 @@
-package za.ac.cput.views.student;
+package za.ac.cput.views.person.student;
 
 import com.google.gson.Gson;
 import okhttp3.OkHttpClient;

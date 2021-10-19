@@ -1,7 +1,6 @@
 package za.ac.cput.views.tertiaryInstitution.Department;
 
 import za.ac.cput.views.MainGUI;
-import za.ac.cput.views.student.*;
 
 import javax.swing.*;
 import java.awt.*;

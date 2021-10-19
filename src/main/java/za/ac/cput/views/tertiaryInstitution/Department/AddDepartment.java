@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import okhttp3.*;
 import za.ac.cput.entity.tertiaryInstitution.Department;
 import za.ac.cput.factory.tertiaryInstitution.DepartmentFactory;
-import za.ac.cput.views.student.StudentMainGUI;
 
 import javax.swing.*;
 import java.awt.*;
