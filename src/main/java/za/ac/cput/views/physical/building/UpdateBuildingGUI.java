@@ -1,10 +1,10 @@
-package za.ac.cput.views.physical;
+package za.ac.cput.views.physical.building;
 
 import com.google.gson.Gson;
 import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import za.ac.cput.entity.physical.Room;
+import za.ac.cput.entity.physical.Building;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -14,7 +14,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.Objects;
 
-public class UpdateRoomGUI extends JFrame implements ActionListener {
+public class UpdateBuildingGUI extends JFrame implements ActionListener {
 
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
 
@@ -25,12 +25,12 @@ public class UpdateRoomGUI extends JFrame implements ActionListener {
     private JButton btnUpdate, btnBack, btnEnter;
     private JLabel lblUpdate, blank1, blank2, blank3, blank4,
             blank5, blank6, blank7, blank8,
-            lblRoomCode, lblRoomType, lblRoomCapacity, lblRoomFloor, lblBuildingID;
-    private JTextField txtUpdateId, txtRoomCode,
-            txtRoomType, txtRoomCapacity, txtRoomFloor, txtBuildingID;
+            lblBuildingID, lblBuildingName, lblBuildingAddress, lblRoomCount;
+    private JTextField txtUpdateId, txtBuildingID, txtBuildingName,
+            txtBuildingAddress, txtRoomCount;
 
-    public UpdateRoomGUI() {
-        super("Update Rooms");
+    public UpdateBuildingGUI() {
+        super("Update Buildings");
         table = new JTable();
 
         pN = new JPanel();
@@ -43,20 +43,18 @@ public class UpdateRoomGUI extends JFrame implements ActionListener {
         btnBack = new JButton("Back");
         btnEnter = new JButton("Enter");
 
-        lblUpdate = new JLabel("Enter Room Code to Update: ", SwingConstants.CENTER);
+        lblUpdate = new JLabel("Enter Building ID to Update: ", SwingConstants.CENTER);
         txtUpdateId = new JTextField();
 
-        lblRoomCode = new JLabel("Room Code: ", SwingConstants.CENTER);
-        lblRoomType = new JLabel("Room Type: ", SwingConstants.CENTER);
-        lblRoomCapacity = new JLabel("Room Capacity: ", SwingConstants.CENTER);
-        lblRoomFloor = new JLabel("Room Floor: ", SwingConstants.CENTER);
         lblBuildingID = new JLabel("Building ID: ", SwingConstants.CENTER);
+        lblBuildingName = new JLabel("Building Name: ", SwingConstants.CENTER);
+        lblBuildingAddress = new JLabel("Building Address: ", SwingConstants.CENTER);
+        lblRoomCount = new JLabel("Room Count: ", SwingConstants.CENTER);
 
-        txtRoomCode = new JTextField();
-        txtRoomType = new JTextField();
-        txtRoomCapacity = new JTextField();
-        txtRoomFloor = new JTextField();
         txtBuildingID = new JTextField();
+        txtBuildingName = new JTextField();
+        txtBuildingAddress = new JTextField();
+        txtRoomCount = new JTextField();
 
         blank1 = new JLabel("");
         blank2 = new JLabel("");
@@ -86,16 +84,14 @@ public class UpdateRoomGUI extends JFrame implements ActionListener {
         pUpdate.add(blank4);
         pUpdate.add(blank5);
 
-        pFields.add(lblRoomCode);
-        pFields.add(txtRoomCode);
-        pFields.add(lblRoomType);
-        pFields.add(txtRoomType);
-        pFields.add(lblRoomCapacity);
-        pFields.add(txtRoomCapacity);
-        pFields.add(lblRoomFloor);
-        pFields.add(txtRoomFloor);
         pFields.add(lblBuildingID);
         pFields.add(txtBuildingID);
+        pFields.add(lblBuildingName);
+        pFields.add(txtBuildingName);
+        pFields.add(lblBuildingAddress);
+        pFields.add(txtBuildingAddress);
+        pFields.add(lblRoomCount);
+        pFields.add(txtRoomCount);
 
         pC.add(pUpdate);
         pC.add(pFields);
@@ -125,29 +121,27 @@ public class UpdateRoomGUI extends JFrame implements ActionListener {
 
     public void displayTable() {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
-        model.addColumn("Room Code");
-        model.addColumn("Room Type");
-        model.addColumn("Room Capacity");
-        model.addColumn("Room Floor");
         model.addColumn("Building ID");
+        model.addColumn("Building Name");
+        model.addColumn("Building Address");
+        model.addColumn("Room Count");
 
         try {
-            final String URL = "http://localhost:8080/room/getall";
+            final String URL = "http://localhost:8080/building/getall";
             String responseBody = run(URL);
-            JSONArray rooms = new JSONArray(responseBody);
+            JSONArray buildings = new JSONArray(responseBody);
 
-            for (int i = 0; i < rooms.length(); i++) {
-                JSONObject room = rooms.getJSONObject(i);
+            for (int i = 0; i < buildings.length(); i++) {
+                JSONObject building = buildings.getJSONObject(i);
 
                 Gson g = new Gson();
-                Room r = g.fromJson(room.toString(), Room.class);
+                Building b = g.fromJson(building.toString(), Building.class);
 
-                Object[] rowData = new Object[5];
-                rowData[0] = r.getRoomCode();
-                rowData[1] = r.getRoomType();
-                rowData[2] = r.getRoomCapacity();
-                rowData[3] = r.getRoomFloor();
-                rowData[4] = r.getBuildingID();
+                Object[] rowData = new Object[4];
+                rowData[0] = b.getBuildingID();
+                rowData[1] = b.getBuildingName();
+                rowData[2] = b.getBuildingAddress();
+                rowData[3] = b.getRoomCount();
                 model.addRow(rowData);
             }
         }
@@ -163,49 +157,46 @@ public class UpdateRoomGUI extends JFrame implements ActionListener {
         }
     }
 
-    private Room getRoom(String id) throws IOException {
-        Room room = null;
+    private Building getBuilding(String id) throws IOException {
+        Building building = null;
         try {
-            final String URL = "http://localhost:8080/room/read/" + id;
+            final String URL = "http://localhost:8080/buiding/read/" + id;
             String responseBody = run(URL);
             Gson gson = new Gson();
-            room = gson.fromJson(responseBody, Room.class);
+            building = gson.fromJson(responseBody, Building.class);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        System.out.println(room);
-        return room;
+        System.out.println(building);
+        return building;
     }
 
-    public void store(String roomCode, String roomType, String stringRoomCapacity, String stringRoomFloor, String stringBuildingID) {
-        Room room = null;
+    public void store(String buildingID, String buildingName, String buildingAddress, String stringRoomCount) {
+        Building building = null;
         try {
-            final String URL = "http://localhost:8080/room/update";
-            int roomCapacity = Integer.parseInt(stringRoomCapacity);
-            int buildingID = Integer.parseInt(stringBuildingID);
-            int roomFloor = Integer.parseInt(stringRoomFloor);
-            room = new Room.RoomBuilder()
-                    .setRoomCode(txtUpdateId.getText())
-                    .setRoomType(txtRoomType.getText())
-                    .setRoomCapacity(Integer.parseInt(txtRoomCapacity.getText()))
-                    .setRoomFloor(Integer.parseInt(txtRoomFloor.getText()))
-                    .setBuildingID(Integer.parseInt(txtBuildingID.getText()))
+            final String URL = "http://localhost:8080/building/update";
+            int roomCount = Integer.parseInt(stringRoomCount);
+            building = new Building.BuildingBuilder()
+                    .setBuildingID(txtUpdateId.getText())
+                    .setBuildingName(txtBuildingName.getText())
+                    .setBuildingAddress(txtBuildingAddress.getText())
+                    .setRoomCount(Integer.parseInt(txtRoomCount.getText()))
                     .build();
             Gson g = new Gson();
-            String jsonString = g.toJson(room);
+            String jsonString = g.toJson(building);
             String r = post(URL, jsonString);
             System.out.println(r);
             if (r != null) {
-                JOptionPane.showMessageDialog(null, "Room updated successfully!");
-                RoomMainGUI.main(null);
+                JOptionPane.showMessageDialog(null, "Building updated successfully!");
+                BuildingMainGUI.main(null);
                 this.setVisible(false);
             } else {
-                JOptionPane.showMessageDialog(null, "Oops, Room not updated.");
+                JOptionPane.showMessageDialog(null, "Oops, Student not updated.");
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
-        System.out.println(room);
+        System.out.println(building);
     }
 
     public String post(final String url, String json) throws IOException {
@@ -218,19 +209,17 @@ public class UpdateRoomGUI extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
         switch (e.getActionCommand()) {
             case "Enter" :
                 if (!Objects.equals(txtUpdateId.getText(), "")) {
                     try {
-                        Room r = getRoom(txtUpdateId.getText());
-                        if(r != null) {
+                        Building b = getBuilding(null);
+                        if(b != null) {
                             pFields.setVisible(true);
-                            txtRoomCode.setText(r.getRoomCode());
-                            txtRoomType.setText(r.getRoomType());
-                            txtRoomCapacity.setText(String.valueOf(r.getRoomCapacity()));
-                            txtRoomFloor.setText(String.valueOf(r.getRoomFloor()));
-                            txtBuildingID.setText(String.valueOf(r.getBuildingID()));
+                            txtBuildingID.setText(b.getBuildingID());
+                            txtBuildingName.setText(b.getBuildingName());
+                            txtBuildingAddress.setText(b.getBuildingAddress());
+                            txtRoomCount.setText(String.valueOf(b.getRoomCount()));
                         } else {
                             JOptionPane.showMessageDialog(null, "No Student with that ID");
                         }
@@ -242,14 +231,13 @@ public class UpdateRoomGUI extends JFrame implements ActionListener {
                 }
                 break;
             case "Update" :
-                store(txtRoomCode.getText(),
-                        txtRoomType.getText(),
-                        txtRoomCapacity.getText(),
-                        txtRoomFloor.getText(),
-                        txtBuildingID.getText());
+                store(txtBuildingID.getText(),
+                        txtBuildingName.getText(),
+                        txtBuildingAddress.getText(),
+                        txtRoomCount.getText());
                 break;
             case "Back" :
-                RoomMainGUI.main(null);
+                BuildingMainGUI.main(null);
                 this.setVisible(false);
                 break;
         }
@@ -257,6 +245,6 @@ public class UpdateRoomGUI extends JFrame implements ActionListener {
 
     public static void main(String[] args) {
 
-        new UpdateRoomGUI().setGUI();
+        new UpdateBuildingGUI().setGUI();
     }
 }

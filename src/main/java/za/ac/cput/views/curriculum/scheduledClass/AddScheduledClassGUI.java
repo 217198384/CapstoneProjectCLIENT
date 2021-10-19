@@ -1,49 +1,48 @@
-package za.ac.cput.views.examination;
+package za.ac.cput.views.curriculum.scheduledClass;
 
 /**
  * Dinelle Kotze
  * 219089302
- * AddExaminationGUI.java
- * This is the Add Examination GUI for the Examination entity.
+ * AddScheduledClassGUI.java
+ * This is the Add Scheduled Class GUI for the Scheduled Class entity.
  */
 
 import com.google.gson.Gson;
 import okhttp3.*;
-import za.ac.cput.entity.curriculum.Examination;
-import za.ac.cput.factory.curriculum.ExaminationFactory;
+import za.ac.cput.entity.curriculum.ScheduledClass;
+import za.ac.cput.factory.curriculum.ScheduledClassFactory;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.time.LocalDate;
 
-public class AddExaminationGUI extends JFrame implements ActionListener
+public class AddScheduledClassGUI extends JFrame implements ActionListener
 {
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
 
     private static OkHttpClient client = new OkHttpClient();
 
-    private JLabel lblDesc, lblSubjectCode, lblDate;
-    private JTextField txtDesc, txtSubjectCode, txtDate;
+    private JLabel lblSubjectCode, lblRoomCode, lblTime;
+    private JTextField txtSubjectCode, txtRoomCode, txtTime;
     private JButton btnSave, btnCancel;
     public JPanel panelNorth, panelSouth;
 
-    public AddExaminationGUI()
+    public AddScheduledClassGUI()
     {
-        super("Add new Examination");
+        super("Add new Scheduled Class");
 
         panelNorth = new JPanel();
         panelSouth = new JPanel();
 
-        lblDesc = new JLabel("Description: ");
+        lblRoomCode = new JLabel("Room Code: ");
         lblSubjectCode = new JLabel("Subject Code: ");
-        lblDate = new JLabel("Date: ");
+        lblTime = new JLabel("Time: ");
 
-        txtDesc = new JTextField(30);
+        txtRoomCode = new JTextField(30);
         txtSubjectCode = new JTextField(30);
-        txtDate = new JTextField(30);
+        txtTime = new JTextField(30);
 
         btnSave = new JButton("Save");
         btnCancel = new JButton("Cancel");
@@ -54,12 +53,12 @@ public class AddExaminationGUI extends JFrame implements ActionListener
         panelNorth.setLayout(new GridLayout(0,2));
         panelSouth.setLayout(new GridLayout(1,2));
 
-        panelNorth.add(lblDesc);
-        panelNorth.add(txtDesc);
         panelNorth.add(lblSubjectCode);
         panelNorth.add(txtSubjectCode);
-        panelNorth.add(lblDate);
-        panelNorth.add(txtDate);
+        panelNorth.add(lblRoomCode);
+        panelNorth.add(txtRoomCode);
+        panelNorth.add(lblTime);
+        panelNorth.add(txtTime);
 
         panelSouth.add(btnSave);
         panelSouth.add(btnCancel);
@@ -81,36 +80,36 @@ public class AddExaminationGUI extends JFrame implements ActionListener
     {
         if (e.getSource() == btnSave)
         {
-            store(txtDesc.getText(),
-                    txtSubjectCode.getText(),
-                    txtDate.getText());
+            store(txtSubjectCode.getText(),
+                    txtRoomCode.getText(),
+                    txtTime.getText());
         }
         else if (e.getSource() == btnCancel)
         {
-            ExaminationMainGUI.main(null);
+            ScheduledClassMainGUI.main(null);
             this.setVisible(false);
         }
     }
 
-    public void store(String desc, String subjectCode, String date)
+    public void store(String subjectCode, String roomCode, String time)
     {
         try
         {
-            final String URL = "http://localhost:8080/examination/create";
-            Examination examination = ExaminationFactory.build(Integer.parseInt(subjectCode), desc, LocalDate.parse(date));
+            final String URL = "http://localhost:8080/scheduledClass/create";
+            ScheduledClass scheduledClass = ScheduledClassFactory.build(Integer.parseInt(subjectCode), Integer.parseInt(roomCode), time);
             Gson g = new Gson();
-            String jsonString = g.toJson(examination);
+            String jsonString = g.toJson(scheduledClass);
             String r = post(URL, jsonString);
 
             if (r != null)
             {
-                JOptionPane.showMessageDialog(null, "Examination saved successfully!");
-                ExaminationMainGUI.main(null);
+                JOptionPane.showMessageDialog(null, "Scheduled Class saved successfully!");
+                ScheduledClassMainGUI.main(null);
                 this.setVisible(false);
             }
             else
             {
-                JOptionPane.showMessageDialog(null, "Oops, Examination not saved.");
+                JOptionPane.showMessageDialog(null, "Oops, Scheduled Class not saved.");
             }
         }
         catch (Exception e)
@@ -131,6 +130,6 @@ public class AddExaminationGUI extends JFrame implements ActionListener
 
     public static void main(String[] args)
     {
-        new AddExaminationGUI().setGUI();
+        new AddScheduledClassGUI().setGUI();
     }
 }

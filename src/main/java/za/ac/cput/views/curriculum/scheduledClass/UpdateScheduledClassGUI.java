@@ -1,4 +1,4 @@
-package za.ac.cput.views.scheduledClass;
+package za.ac.cput.views.curriculum.scheduledClass;
 
 /**
  * Dinelle Kotze

@@ -73,7 +73,7 @@ public class CourseMainGUI extends JFrame implements ActionListener {
                 this.setVisible(false);
                 break;
 
-            case "Add new Course":
+            case "Add New Course":
                 AddCourse.main(null);
                 this.setVisible(false);
                 break;
