@@ -1,17 +1,17 @@
-package za.ac.cput.views.examination;
+package za.ac.cput.views.curriculum.scheduledClass;
 
 /**
  * Dinelle Kotze
  * 219089302
- * DeleteExaminationGUI.java
- * This is the Delete Examination GUI for the Examination entity.
+ * DeleteScheduledClassGUI.java
+ * This is the Delete Scheduled Class GUI for the Scheduled Class entity.
  */
 
 import com.google.gson.Gson;
 import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import za.ac.cput.entity.curriculum.Examination;
+import za.ac.cput.entity.curriculum.ScheduledClass;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -21,7 +21,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.Objects;
 
-public class DeleteExaminationGUI extends JFrame implements ActionListener
+public class DeleteScheduledClassGUI extends JFrame implements ActionListener
 {
     private static OkHttpClient client = new OkHttpClient();
 
@@ -31,9 +31,9 @@ public class DeleteExaminationGUI extends JFrame implements ActionListener
     private JLabel lblDelete, blank1, blank2, blank3, blank4;
     private JTextField txtDeleteId;
 
-    public DeleteExaminationGUI()
+    public DeleteScheduledClassGUI()
     {
-        super("Delete Examination");
+        super("Delete Scheduled Class");
         table = new JTable();
 
         panelCenter = new JPanel();
@@ -42,7 +42,7 @@ public class DeleteExaminationGUI extends JFrame implements ActionListener
         btnDelete = new JButton("Delete");
         btnBack = new JButton("Back");
 
-        lblDelete = new JLabel("Enter Examination ID to Delete: ");
+        lblDelete = new JLabel("Enter Scheduled Class ID to Delete: ");
         txtDeleteId = new JTextField();
 
         blank1 = new JLabel("");
@@ -89,29 +89,29 @@ public class DeleteExaminationGUI extends JFrame implements ActionListener
     public void displayTable()
     {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
-        model.addColumn("Examination ID");
-        model.addColumn("Description");
-        model.addColumn("Subject");
-        model.addColumn("Date");
+        model.addColumn("Scheduled Class ID");
+        model.addColumn("Subject Code");
+        model.addColumn("Room Code");
+        model.addColumn("Time");
 
         try
         {
-            final String URL = "http://localhost:8080/examination/getall";
+            final String URL = "http://localhost:8080/scheduledClass/getall";
             String responseBody = run(URL);
-            JSONArray examinations = new JSONArray(responseBody);
+            JSONArray scheduledClasses = new JSONArray(responseBody);
 
-            for (int i = 0; i < examinations.length(); i++)
+            for (int i = 0; i < scheduledClasses.length(); i++)
             {
-                JSONObject examination = examinations.getJSONObject(i);
+                JSONObject scheduledClass = scheduledClasses.getJSONObject(i);
 
                 Gson g = new Gson();
-                Examination e = g.fromJson(examination.toString(), Examination.class);
+                ScheduledClass s = g.fromJson(scheduledClass.toString(), ScheduledClass.class);
 
                 Object[] rowData = new Object[4];
-                rowData[0] = e.getExamId();
-                rowData[1] = e.getExamDesc();
-                rowData[2] = e.getSubjectCode();
-                rowData[3] = e.getExamDate();
+                rowData[0] = s.getScheduledClassId();
+                rowData[1] = s.getSubjectCode();
+                rowData[2] = s.getRoomCode();
+                rowData[3] = s.getClassTime();
                 model.addRow(rowData);
             }
         }
@@ -131,7 +131,7 @@ public class DeleteExaminationGUI extends JFrame implements ActionListener
 
     public boolean request(String id) throws IOException
     {
-        final String URL = "http://localhost:8080/examination/delete/" + id;
+        final String URL = "http://localhost:8080/scheduledClass/delete/" + id;
         RequestBody body = RequestBody
                 .create( "charset=utf-8", MediaType.parse("application/json"));
         Request request = new Request.Builder()
@@ -151,7 +151,7 @@ public class DeleteExaminationGUI extends JFrame implements ActionListener
         {
             if (!Objects.equals(txtDeleteId.getText(), ""))
             {
-                int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete?", "Delete Examination", JOptionPane.YES_NO_OPTION);
+                int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete?", "Delete Scheduled Class", JOptionPane.YES_NO_OPTION);
 
                 if (result == JOptionPane.YES_OPTION)
                 {
@@ -159,13 +159,13 @@ public class DeleteExaminationGUI extends JFrame implements ActionListener
                     {
                         if(request(txtDeleteId.getText()))
                         {
-                            JOptionPane.showMessageDialog(null,"Examination Deleted");
-                            ExaminationMainGUI.main(null);
+                            JOptionPane.showMessageDialog(null,"Scheduled Class Deleted");
+                            ScheduledClassMainGUI.main(null);
                             this.setVisible(false);
                         }
                         else
                         {
-                            JOptionPane.showMessageDialog(null,"Problem, Examination Not Deleted");
+                            JOptionPane.showMessageDialog(null,"Problem, Scheduled Class Not Deleted");
                         }
                     }
                     catch (IOException ex)
@@ -180,13 +180,13 @@ public class DeleteExaminationGUI extends JFrame implements ActionListener
             }
         }
         else if (e.getSource() == btnBack) {
-            ExaminationMainGUI.main(null);
+            ScheduledClassMainGUI.main(null);
             this.setVisible(false);
         }
     }
 
     public static void main(String[] args)
     {
-        new DeleteExaminationGUI().setGUI();
+        new DeleteScheduledClassGUI().setGUI();
     }
 }

@@ -1,10 +1,10 @@
-package za.ac.cput.views.scheduledClass;
+package za.ac.cput.views.curriculum.examination;
 
 /**
  * Dinelle Kotze
  * 219089302
- * ViewScheduledClassGUI.java
- * This is the View Scheduled Class GUI for the Scheduled Class entity.
+ * ViewExaminationGUI.java
+ * This is the View Examination GUI for the Examination entity.
  */
 
 import com.google.gson.Gson;
@@ -13,8 +13,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import za.ac.cput.entity.curriculum.ScheduledClass;
+import za.ac.cput.entity.curriculum.Examination;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -23,7 +22,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-public class ViewScheduledClassGUI extends JFrame implements ActionListener
+public class ViewExaminationGUI extends JFrame implements ActionListener
 {
     private static OkHttpClient client = new OkHttpClient();
 
@@ -31,9 +30,9 @@ public class ViewScheduledClassGUI extends JFrame implements ActionListener
     private JPanel panelCenter, panelSouth;
     private JButton btnBack;
 
-    public ViewScheduledClassGUI()
+    public ViewExaminationGUI()
     {
-        super("All Scheduled Classes");
+        super("All Examinations");
         table = new JTable();
 
         panelCenter = new JPanel();
@@ -67,29 +66,29 @@ public class ViewScheduledClassGUI extends JFrame implements ActionListener
     public void getAll()
     {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
-        model.addColumn("Scheduled Class ID");
+        model.addColumn("Examination ID");
+        model.addColumn("Description");
         model.addColumn("Subject Code");
-        model.addColumn("Room Code");
-        model.addColumn("Time");
+        model.addColumn("Date");
 
         try
         {
-            final String URL = "http://localhost:8080/scheduledClass/getall";
+            final String URL = "http://localhost:8080/examination/getall";
             String responseBody = run(URL);
-            JSONArray scheduledClasses = new JSONArray(responseBody);
+            JSONArray examinations = new JSONArray(responseBody);
 
-            for (int i = 0; i < scheduledClasses.length(); i++)
+            for (int i = 0; i < examinations.length(); i++)
             {
-                JSONObject scheduledClass = scheduledClasses.getJSONObject(i);
+                JSONObject examination = examinations.getJSONObject(i);
 
                 Gson g = new Gson();
-                ScheduledClass s = g.fromJson(scheduledClass.toString(), ScheduledClass.class);
+                Examination e = g.fromJson(examination.toString(), Examination.class);
 
                 Object[] rowData = new Object[4];
-                rowData[0] = s.getScheduledClassId();
-                rowData[1] = s.getSubjectCode();
-                rowData[2] = s.getRoomCode();
-                rowData[3] = s.getClassTime();
+                rowData[0] = e.getExamId();
+                rowData[1] = e.getExamDesc();
+                rowData[2] = e.getSubjectCode();
+                rowData[3] = e.getExamDate();
                 model.addRow(rowData);
             }
         }
@@ -113,13 +112,13 @@ public class ViewScheduledClassGUI extends JFrame implements ActionListener
     {
         if (e.getSource() == btnBack)
         {
-            ScheduledClassMainGUI.main(null);
+            ExaminationMainGUI.main(null);
             this.setVisible(false);
         }
     }
 
     public static void main(String[] args)
     {
-        new ViewScheduledClassGUI().setGUI();
+        new ViewExaminationGUI().setGUI();
     }
 }

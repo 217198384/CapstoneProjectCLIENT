@@ -1,4 +1,4 @@
-package za.ac.cput.views.physical;
+package za.ac.cput.views.physical.room;
 
 import za.ac.cput.views.MainGUI;
 

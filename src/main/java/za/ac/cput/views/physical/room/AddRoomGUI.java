@@ -1,12 +1,10 @@
-package za.ac.cput.views.physical;
+package za.ac.cput.views.physical.room;
 
 import com.google.gson.Gson;
 import okhttp3.*;
-import za.ac.cput.entity.person.Student;
-import za.ac.cput.entity.physical.Building;
-import za.ac.cput.factory.person.StudentFactory;
-import za.ac.cput.factory.physical.BuildingFactory;
-import za.ac.cput.views.student.StudentMainGUI;
+import za.ac.cput.entity.physical.Room;
+import za.ac.cput.factory.physical.RoomFactory;
+import za.ac.cput.views.physical.building.BuildingMainGUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,35 +12,36 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-public class AddBuildingGUI extends JFrame implements ActionListener {
+public class AddRoomGUI extends JFrame implements ActionListener {
 
     public static final MediaType JSON =
             MediaType.get("application/json; charset=utf-8");
 
     private static OkHttpClient client = new OkHttpClient();
 
-    private JLabel lblBuildingID, lblBuildingName, lblBuildingAddress, lblRoomCount;
-    private JTextField txtBuildingID, txtBuildingName, txtBuildingAddress, txtRoomCount;
+    private JLabel lblRoomCode, lblRoomType, lblRoomCapacity, lblRoomFloor, lblBuildingID;
+    private JTextField txtRoomCode, txtRoomType, txtRoomCapacity, txtRoomFloor, txtBuildingID;
     private JButton btnSave, btnCancel;
     public JPanel pN, pS;
 
-    public AddBuildingGUI() {
+    public AddRoomGUI() {
 
-        super("Add New Buildings");
+        super("Add New Rooms");
 
         pN = new JPanel();
         pS = new JPanel();
 
+        lblRoomCode = new JLabel("Room Code: ");
+        lblRoomType = new JLabel("Room Type: ");
+        lblRoomCapacity = new JLabel("Room Capacity: ");
+        lblRoomFloor = new JLabel("Room Floor: ");
         lblBuildingID = new JLabel("Building ID: ");
-        lblBuildingName = new JLabel("Building Name: ");
-        lblBuildingAddress = new JLabel("Building Address: ");
-        lblRoomCount = new JLabel("Room Count: ");
 
-
+        txtRoomCode = new JTextField(30);
+        txtRoomType = new JTextField(30);
+        txtRoomCapacity = new JTextField(30);
+        txtRoomFloor = new JTextField(30);
         txtBuildingID = new JTextField(30);
-        txtBuildingName = new JTextField(30);
-        txtBuildingAddress = new JTextField(30);
-        txtRoomCount = new JTextField(30);
 
         btnSave = new JButton("Save");
         btnCancel = new JButton("Cancel");
@@ -53,14 +52,16 @@ public class AddBuildingGUI extends JFrame implements ActionListener {
         pN.setLayout(new GridLayout(0,2));
         pS.setLayout(new GridLayout(1,2));
 
+        pN.add(lblRoomCode);
+        pN.add(txtRoomCode);
+        pN.add(lblRoomType);
+        pN.add(txtRoomType);
+        pN.add(lblRoomCapacity);
+        pN.add(txtRoomCapacity);
+        pN.add(lblRoomFloor);
+        pN.add(txtRoomFloor);
         pN.add(lblBuildingID);
         pN.add(txtBuildingID);
-        pN.add(lblBuildingName);
-        pN.add(txtBuildingName);
-        pN.add(lblBuildingAddress);
-        pN.add(txtBuildingAddress);
-        pN.add(lblRoomCount);
-        pN.add(txtRoomCount);
 
         pS.add(btnSave);
         pS.add(btnCancel);
@@ -81,23 +82,26 @@ public class AddBuildingGUI extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == btnSave) {
-            store(txtBuildingID.getText(),
-                    txtBuildingName.getText(),
-                    txtBuildingAddress.getText(),
-                    txtRoomCount.getText());
+            store(txtRoomType.getText(),
+                    txtRoomCode.getText(),
+                    txtRoomCapacity.getText(),
+                    txtRoomFloor.getText(),
+                    txtBuildingID.getText());
         } else if (e.getSource() == btnCancel) {
-            StudentMainGUI.main(null);
+            RoomMainGUI.main(null);
             this.setVisible(false);
         }
     }
 
-    public void store(String buildingID, String buildingName, String buildingAddress, String roomCountString) {
+    public void store(String roomType, String roomCode, String stringRoomCapacity, String stringRoomFloor, String stringBuildingID) {
         try {
-            final String URL = "http://localhost:8080/building/create";
-            int roomCount = Integer.parseInt(roomCountString);
-            Building building = BuildingFactory.build(buildingID, roomCount, buildingName, buildingAddress);
+            final String URL = "http://localhost:8080/room/create";
+            int roomCapacity = Integer.parseInt(stringRoomCapacity);
+            int roomFloor = Integer.parseInt(stringRoomFloor);
+            int buildingID = Integer.parseInt(stringBuildingID);
+            Room room = RoomFactory.build(roomType, roomCode, roomCapacity, roomFloor, buildingID);
             Gson g = new Gson();
-            String jsonString = g.toJson(building);
+            String jsonString = g.toJson(room);
             String r = post(URL, jsonString);
             if (r != null) {
                 JOptionPane.showMessageDialog(null, "Building saved successfully!");
@@ -121,6 +125,6 @@ public class AddBuildingGUI extends JFrame implements ActionListener {
 
     public static void main(String[] args) {
 
-        new AddBuildingGUI().setGUI();
+        new AddRoomGUI().setGUI();
     }
 }

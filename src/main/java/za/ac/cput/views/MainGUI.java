@@ -7,11 +7,11 @@ package za.ac.cput.views;
  * 17 October 2021
  */
 
-import za.ac.cput.views.examination.ExaminationMainGUI;
-import za.ac.cput.views.scheduledClass.ScheduledClassMainGUI;
+import za.ac.cput.views.curriculum.examination.ExaminationMainGUI;
+import za.ac.cput.views.curriculum.scheduledClass.ScheduledClassMainGUI;
 import za.ac.cput.views.person.lecturer.LecturerMenuGUI;
-import za.ac.cput.views.physical.BuildingMainGUI;
-import za.ac.cput.views.physical.RoomMainGUI;
+import za.ac.cput.views.physical.building.BuildingMainGUI;
+import za.ac.cput.views.physical.room.RoomMainGUI;
 import za.ac.cput.views.person.student.StudentMainGUI;
 import za.ac.cput.views.tertiaryInstitution.Course.CourseMainGUI;
 import za.ac.cput.views.tertiaryInstitution.Department.DepartmentMainGUI;

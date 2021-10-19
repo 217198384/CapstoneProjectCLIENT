@@ -1,4 +1,4 @@
-package za.ac.cput.views.physical;
+package za.ac.cput.views.physical.room;
 
 import com.google.gson.Gson;
 import okhttp3.OkHttpClient;
@@ -6,7 +6,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import za.ac.cput.entity.physical.Building;
+import za.ac.cput.entity.physical.Room;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -15,7 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-public class GetBuildingGUI extends JFrame implements ActionListener {
+public class GetRoomGUI extends JFrame implements ActionListener {
 
     private static OkHttpClient client = new OkHttpClient();
 
@@ -23,8 +23,8 @@ public class GetBuildingGUI extends JFrame implements ActionListener {
     private JPanel pC, pS;
     private JButton btnBack;
 
-    public GetBuildingGUI() {
-        super("All Buildings");
+    public GetRoomGUI() {
+        super("All Rooms");
         table = new JTable();
 
         pC = new JPanel();
@@ -56,27 +56,29 @@ public class GetBuildingGUI extends JFrame implements ActionListener {
 
     public void getAll() {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.addColumn("Room Code");
+        model.addColumn("Room Type");
+        model.addColumn("Room Capacity");
+        model.addColumn("Room Floor");
         model.addColumn("Building ID");
-        model.addColumn("Building Name");
-        model.addColumn("Room Count");
-        model.addColumn("Building Address");
 
         try {
-            final String URL = "http://localhost:8080/building/getall";
+            final String URL = "http://localhost:8080/room/getall";
             String responseBody = run(URL);
-            JSONArray buildings = new JSONArray(responseBody);
+            JSONArray rooms = new JSONArray(responseBody);
 
-            for (int i = 0; i < buildings.length(); i++) {
-                JSONObject building = buildings.getJSONObject(i);
+            for (int i = 0; i < rooms.length(); i++) {
+                JSONObject room = rooms.getJSONObject(i);
 
                 Gson g = new Gson();
-                Building b = g.fromJson(building.toString(), Building.class);
+                Room r = g.fromJson(room.toString(), Room.class);
 
-                Object[] rowData = new Object[4];
-                rowData[0] = b.getBuildingID();
-                rowData[1] = b.getBuildingName();
-                rowData[2] = b.getBuildingAddress();
-                rowData[3] = b.getRoomCount();
+                Object[] rowData = new Object[5];
+                rowData[0] = r.getRoomCode();
+                rowData[1] = r.getRoomType();
+                rowData[2] = r.getRoomCapacity();
+                rowData[3] = r.getRoomFloor();
+                rowData[4] = r.getBuildingID();
                 model.addRow(rowData);
             }
         }
@@ -95,13 +97,13 @@ public class GetBuildingGUI extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnBack) {
-            BuildingMainGUI.main(null);
+            RoomMainGUI.main(null);
             this.setVisible(false);
         }
     }
 
     public static void main(String[] args) {
 
-        new GetBuildingGUI().setGUI();
+        new GetRoomGUI().setGUI();
     }
 }

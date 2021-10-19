@@ -1,4 +1,4 @@
-package za.ac.cput.views.examination;
+package za.ac.cput.views.curriculum.examination;
 
 /**
  * Dinelle Kotze

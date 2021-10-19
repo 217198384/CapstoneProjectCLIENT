@@ -1,12 +1,10 @@
-package za.ac.cput.views.physical;
+package za.ac.cput.views.physical.building;
 
 import com.google.gson.Gson;
 import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import za.ac.cput.entity.person.Student;
 import za.ac.cput.entity.physical.Building;
-import za.ac.cput.views.student.StudentMainGUI;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
