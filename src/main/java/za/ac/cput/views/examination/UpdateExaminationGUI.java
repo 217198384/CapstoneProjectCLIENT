@@ -117,6 +117,7 @@ public class UpdateExaminationGUI extends JFrame implements ActionListener
         btnUpdate.addActionListener(this);
         btnBack.addActionListener(this);
 
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         table.setRowHeight(30);
         this.pack();
         this.setSize(1000, 700);
@@ -198,7 +199,7 @@ public class UpdateExaminationGUI extends JFrame implements ActionListener
                     .setExamId(txtUpdateId.getText())
                     .setExamDesc(desc)
                     .setSubjectCode(Integer.parseInt(subjectCode))
-                    .setExamDate(LocalDate.parse(date))
+                    .setExamDate(date)
                     .build();
 
             Gson g = new Gson();

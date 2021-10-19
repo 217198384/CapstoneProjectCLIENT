@@ -69,6 +69,7 @@ public class ScheduledClassMainGUI extends JFrame implements ActionListener
         btnDelete.addActionListener(this);
         btnBack.addActionListener(this);
 
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
         this.setVisible(true);
         this.setLocationRelativeTo(null);
