@@ -5,7 +5,7 @@ import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import za.ac.cput.entity.tertiaryInstitution.Course;
-import za.ac.cput.factory.tertiaryInstitution.CourseFactory;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -21,10 +21,10 @@ public class UpdateCourse extends JFrame implements ActionListener {
     private JTable table;
     private JPanel pN, pC, pS, pFields, pUpdate;
     private JButton btnUpdate, btnBack, btnEnter;
-    private JLabel lblUpdate, blank1, blank2, blank3, blank4,
+    private JLabel blank1, blank2, blank3, blank4,
             blank5, blank6, blank7, blank8,
             lblCourseCode, lblTitle, lblDepartmentId, lblCredit, lblDuration, lblFullTime;
-    private JTextField txtUpdateCode, txtTitle, txtDepartmentId, txtCredit, txtDuration, txtFullTime;
+    private JTextField txtCourseCode, txtTitle, txtDepartmentId, txtCredit, txtDuration, txtFullTime;
 
     public UpdateCourse(){
         super("Update Course");
@@ -40,8 +40,8 @@ public class UpdateCourse extends JFrame implements ActionListener {
         btnBack = new JButton("Back");
         btnEnter = new JButton("Enter");
 
-        lblUpdate = new JLabel("Enter Course Code to update: ", SwingConstants.CENTER);
-        txtUpdateCode = new JTextField();
+        lblCourseCode = new JLabel("Enter Department ID to update: ", SwingConstants.CENTER);
+        txtCourseCode = new JTextField();
 
         lblTitle = new JLabel("Title: ", SwingConstants.CENTER);
         lblDepartmentId = new JLabel("Department ID: ", SwingConstants.CENTER);
@@ -77,8 +77,8 @@ public class UpdateCourse extends JFrame implements ActionListener {
         pUpdate.add(blank1);
         pUpdate.add(blank2);
         pUpdate.add(blank3);
-        pUpdate.add(lblUpdate);
-        pUpdate.add(txtUpdateCode);
+        pUpdate.add(lblCourseCode);
+        pUpdate.add(txtCourseCode);
         pUpdate.add(btnEnter);
         pUpdate.add(blank4);
         pUpdate.add(blank5);
@@ -176,14 +176,20 @@ public class UpdateCourse extends JFrame implements ActionListener {
         return course;
     }
 
-    public void store (String courseCode, String title, String department, String creditString, String durationString, String fullTime){
+    public void store (String courseCode, String title, String departmentId, String credit, String duration, String fullTime){
         try {
-            final String URL = "http://localhost:8080/course/create";
-            int credit = Integer.parseInt(creditString);
-            int duration = Integer.parseInt(durationString);
-            boolean FullTime = Boolean.parseBoolean(fullTime);
-            Course course = CourseFactory.build(courseCode, title, department, credit, duration, FullTime);
+            final String URL = "http://localhost:8080/course/update";
+
+            Course course = new Course.CourseBuilder()
+                    .setCourseCode(txtCourseCode.getText())
+                    .setTitle(txtTitle.getText())
+                    .setDepartmentId(txtDepartmentId.getText())
+                    .setCredit(Integer.parseInt(txtCredit.getText()))
+                    .setDuration(Integer.parseInt(txtDuration.getText()))
+                    .setFullTime(Boolean.parseBoolean(txtFullTime.getText()))
+                    .build();
             Gson g = new Gson();
+
             String jsonString = g.toJson(course);
             String r = post(URL, jsonString);
             if (r != null) {
@@ -210,9 +216,9 @@ public class UpdateCourse extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()){
             case "Enter":
-                if (!Objects.equals(txtUpdateCode.getText(), "")) {
+                if (!Objects.equals(txtCourseCode.getText(), "")) {
                     try{
-                        Course c = getCourse((txtUpdateCode.getText()));
+                        Course c = getCourse((txtCourseCode.getText()));
                         if(c != null){
                             pFields.setVisible(true);
                             txtTitle.setText(c.getcourseTitle());
@@ -229,7 +235,7 @@ public class UpdateCourse extends JFrame implements ActionListener {
                 break;
 
             case "Update":
-                store(txtUpdateCode.getText(),
+                store(txtCourseCode.getText(),
                         txtTitle.getText(),
                         txtDepartmentId.getText(),
                         txtCredit.getText(),

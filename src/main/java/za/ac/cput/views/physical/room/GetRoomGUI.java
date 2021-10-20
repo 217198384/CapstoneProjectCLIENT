@@ -78,8 +78,8 @@ public class GetRoomGUI extends JFrame implements ActionListener {
                 Room r = g.fromJson(room.toString(), Room.class);
 
                 Object[] rowData = new Object[5];
-                rowData[0] = r.getRoomType();
-                rowData[1] = r.getRoomCode();
+                rowData[0] = r.getRoomCode();
+                rowData[1] = r.getRoomType();
                 rowData[2] = r.getRoomCapacity();
                 rowData[3] = r.getRoomFloor();
                 rowData[4] = r.getBuildingID();

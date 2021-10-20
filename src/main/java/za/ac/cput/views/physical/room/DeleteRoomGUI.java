@@ -41,7 +41,7 @@ public class DeleteRoomGUI extends JFrame implements ActionListener {
         btnDelete = new JButton("Delete");
         btnBack = new JButton("Back");
 
-        lblDelete = new JLabel(" Enter Room ID to Delete: ");
+        lblDelete = new JLabel(" Enter Room Code to Delete: ");
         txtDeleteId = new JTextField();
 
         blank1 = new JLabel("");

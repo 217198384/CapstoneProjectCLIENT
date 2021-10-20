@@ -217,7 +217,7 @@ public class UpdateBuildingGUI extends JFrame implements ActionListener {
             case "Enter" :
                 if (!Objects.equals(txtUpdateId.getText(), "")) {
                     try {
-                        Building b = getBuilding(txtBuildingID.getText());
+                        Building b = getBuilding(txtUpdateId.getText());
                         if(b != null) {
                             pFields.setVisible(true);
                             txtBuildingID.setText(b.getBuildingID());
