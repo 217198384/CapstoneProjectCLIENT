@@ -16,8 +16,7 @@ public class Examination
 {
     @Id
     private int subjectCode;
-    private String examDesc, examId;
-    private LocalDate examDate;
+    private String examDesc, examId, examDate;
 
     protected Examination() {}
 
@@ -41,7 +40,7 @@ public class Examination
         return examDesc;
     }
 
-    public LocalDate getExamDate() {
+    public String getExamDate() {
         return examDate;
     }
 
@@ -58,8 +57,7 @@ public class Examination
     public static class Builder
     {
         private int subjectCode;
-        private String examDesc, examId;
-        private LocalDate examDate;
+        private String examDesc, examId, examDate;
 
         public Builder setExamId(String examId)
         {
@@ -80,7 +78,7 @@ public class Examination
             return this;
         }
 
-        public Builder setExamDate(LocalDate examDate)
+        public Builder setExamDate(String examDate)
         {
             this.examDate = examDate;
             return this;

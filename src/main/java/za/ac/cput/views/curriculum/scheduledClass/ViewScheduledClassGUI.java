@@ -55,6 +55,7 @@ public class ViewScheduledClassGUI extends JFrame implements ActionListener
 
         btnBack.addActionListener(this);
 
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getAll();
         table.setRowHeight(30);
         this.add(new JScrollPane(table));
@@ -74,7 +75,7 @@ public class ViewScheduledClassGUI extends JFrame implements ActionListener
 
         try
         {
-            final String URL = "http://localhost:8080/scheduledClass/getall";
+            final String URL = "http://localhost:8080/scheduledClass/getAll";
             String responseBody = run(URL);
             JSONArray scheduledClasses = new JSONArray(responseBody);
 

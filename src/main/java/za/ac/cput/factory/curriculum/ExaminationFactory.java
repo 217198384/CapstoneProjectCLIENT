@@ -16,9 +16,9 @@ import java.time.LocalDate;
 
 public class ExaminationFactory {
 
-    public static Examination build(int subjectCode, String examDesc, LocalDate examDate) {
+    public static Examination build(int subjectCode, String examDesc, String examDate) {
 
-        if(subjectCode <= 0 || examDesc.isEmpty() || examDate == null) {
+        if(subjectCode <= 0 || examDesc.isEmpty() || examDate.isEmpty()) {
             return null;
         }
 

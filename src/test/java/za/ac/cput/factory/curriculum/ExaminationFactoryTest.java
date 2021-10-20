@@ -29,11 +29,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 class ExaminationFactoryTest {
 
     //Date date = new Date(121, Calendar.JUNE, 14);
-
-    LocalDate date = LocalDate.of(2021, 6, 14);
     @Test
     void test() {
-        Examination exam = ExaminationFactory.build( 10012, "Mathematics", date);
+        Examination exam = ExaminationFactory.build( 10012, "Mathematics", "2021/08/20");
         System.out.println(exam);
         assertNotNull(exam);
     }

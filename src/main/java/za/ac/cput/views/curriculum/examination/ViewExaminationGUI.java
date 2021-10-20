@@ -54,6 +54,7 @@ public class ViewExaminationGUI extends JFrame implements ActionListener
 
         btnBack.addActionListener(this);
 
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getAll();
         table.setRowHeight(30);
         this.add(new JScrollPane(table));

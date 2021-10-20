@@ -78,6 +78,7 @@ public class DeleteScheduledClassGUI extends JFrame implements ActionListener
         btnBack.addActionListener(this);
         btnDelete.addActionListener(this);
 
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         table.setRowHeight(30);
         this.add(new JScrollPane(table));
         this.pack();
