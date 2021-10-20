@@ -1,3 +1,7 @@
+/**
+ * author: Llewelyn Klaase
+ * student no: 216267072
+ */
 package za.ac.cput.views.physical.building;
 
 import com.google.gson.Gson;
@@ -58,11 +62,11 @@ public class GetBuildingGUI extends JFrame implements ActionListener {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.addColumn("Building ID");
         model.addColumn("Building Name");
-        model.addColumn("Room Count");
         model.addColumn("Building Address");
+        model.addColumn("Room Count");
 
         try {
-            final String URL = "http://localhost:8080/building/getalllect";
+            final String URL = "http://localhost:8080/building/getall";
             String responseBody = run(URL);
             JSONArray buildings = new JSONArray(responseBody);
 

@@ -1,3 +1,7 @@
+/**
+ * author: Llewelyn Klaase
+ * student no: 216267072
+ */
 package za.ac.cput.views.physical.room;
 
 import com.google.gson.Gson;
@@ -91,7 +95,7 @@ public class DeleteRoomGUI extends JFrame implements ActionListener {
         model.addColumn("Building ID");
 
         try {
-            final String URL = "http://localhost:8080/room/getalllect";
+            final String URL = "http://localhost:8080/room/getall";
             String responseBody = run(URL);
             JSONArray rooms = new JSONArray(responseBody);
 
@@ -123,7 +127,7 @@ public class DeleteRoomGUI extends JFrame implements ActionListener {
     }
 
     public boolean request(String id) throws IOException {
-        final String URL = "http://localhost:8080/room/createl/" + id;
+        final String URL = "http://localhost:8080/room/delete/" + id;
         RequestBody body = RequestBody
                 .create( "charset=utf-8", MediaType.parse("application/json"));
         Request request = new Request.Builder()
@@ -149,7 +153,7 @@ public class DeleteRoomGUI extends JFrame implements ActionListener {
                             RoomMainGUI.main(null);
                             this.setVisible(false);
                         } else {
-                            JOptionPane.showMessageDialog(null,"Problem, Building Not Deleted");
+                            JOptionPane.showMessageDialog(null,"Problem, Room Not Deleted");
                         }
                     } catch (IOException ex) {
                         ex.printStackTrace();

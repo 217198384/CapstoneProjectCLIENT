@@ -1,3 +1,7 @@
+/**
+ * author: Llewelyn Klaase
+ * student no: 216267072
+ */
 package za.ac.cput.views.physical.building;
 
 import com.google.gson.Gson;
@@ -90,9 +94,9 @@ public class AddBuildingGUI extends JFrame implements ActionListener {
 
     public void store(String buildingID, String buildingName, String buildingAddress, String roomCountString) {
         try {
-            final String URL = "http://localhost:8080/building/createl";
+            final String URL = "http://localhost:8080/building/create";
             int roomCount = Integer.parseInt(roomCountString);
-            Building building = BuildingFactory.build(buildingID, roomCount, buildingName, buildingAddress);
+            Building building = BuildingFactory.build(buildingID, buildingName, roomCount, buildingAddress);
             Gson g = new Gson();
             String jsonString = g.toJson(building);
             String r = post(URL, jsonString);

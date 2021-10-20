@@ -1,20 +1,28 @@
-package za.ac.cput.entity.physical;
-
 /**
  * author: Llewelyn Klaase
  * student no: 216267072
  */
+package za.ac.cput.entity.physical;
+
+import javax.persistence.Id;
 
 public class Building {
 
+    @Id
+    private String buildingID;
     private int roomCount;
-    private String buildingID, buildingName, buildingAddress;
+    private String buildingName, buildingAddress;
+
+
 
     public Building(BuildingBuilder building) {
         this.buildingID = building.buildingID;
         this.buildingName = building.buildingName;
         this.buildingAddress = building.buildingAddress;
         this.roomCount = building.roomCount;
+    }
+
+    protected Building() {
     }
 
     public String getBuildingID() {

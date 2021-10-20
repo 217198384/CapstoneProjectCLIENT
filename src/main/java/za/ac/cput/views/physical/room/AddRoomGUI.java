@@ -1,3 +1,7 @@
+/**
+ * author: Llewelyn Klaase
+ * student no: 216267072
+ */
 package za.ac.cput.views.physical.room;
 
 import com.google.gson.Gson;
@@ -82,8 +86,8 @@ public class AddRoomGUI extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == btnSave) {
-            store(txtRoomType.getText(),
-                    txtRoomCode.getText(),
+            store(txtRoomCode.getText(),
+                    txtRoomType.getText(),
                     txtRoomCapacity.getText(),
                     txtRoomFloor.getText(),
                     txtBuildingID.getText());
@@ -93,19 +97,19 @@ public class AddRoomGUI extends JFrame implements ActionListener {
         }
     }
 
-    public void store(String roomType, String roomCode, String stringRoomCapacity, String stringRoomFloor, String stringBuildingID) {
+    public void store(String roomCode, String roomType, String stringRoomCapacity, String stringRoomFloor, String stringBuildingID) {
         try {
-            final String URL = "http://localhost:8080/room/createl";
+            final String URL = "http://localhost:8080/room/create";
             int roomCapacity = Integer.parseInt(stringRoomCapacity);
             int roomFloor = Integer.parseInt(stringRoomFloor);
             int buildingID = Integer.parseInt(stringBuildingID);
-            Room room = RoomFactory.build(roomType, roomCode, roomCapacity, roomFloor, buildingID);
+            Room room = RoomFactory.build(roomCode, roomType, roomCapacity, roomFloor, buildingID);
             Gson g = new Gson();
             String jsonString = g.toJson(room);
             String r = post(URL, jsonString);
             if (r != null) {
                 JOptionPane.showMessageDialog(null, "Building saved successfully!");
-                BuildingMainGUI.main(null);
+                RoomMainGUI.main(null);
                 this.setVisible(false);
             } else {
                 JOptionPane.showMessageDialog(null, "Oops, Building not saved.");
