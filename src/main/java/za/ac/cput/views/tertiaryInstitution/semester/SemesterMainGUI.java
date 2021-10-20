@@ -1,4 +1,4 @@
-package za.ac.cput.views.enroll;
+package za.ac.cput.views.tertiaryInstitution.semester;
 
 import za.ac.cput.views.MainGUI;
 
@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class EnrollMainGUI extends JFrame implements ActionListener {
+public class SemesterMainGUI extends JFrame implements ActionListener {
     private final JButton btnView;
     private final JButton btnAdd;
     private final JButton btnUpdate;
@@ -19,26 +19,26 @@ public class EnrollMainGUI extends JFrame implements ActionListener {
     private final JPanel pS;
     private final Font hFt;
 
-    public EnrollMainGUI() {
-        super("Enroll Main Menu");
+    public SemesterMainGUI() {
+        super("Semester Main Menu");
 
         pN = new JPanel();
         pC = new JPanel();
         pS = new JPanel();
 
-        btnView = new JButton("View All Enrollments");
-        btnAdd = new JButton("Enroll New Student");
-        btnUpdate = new JButton("Update Student Enrollment");
-        btnDelete = new JButton("Delete Student Enrollment");
+        btnView = new JButton("View All Semester");
+        btnAdd = new JButton("Add New Semester");
+        btnUpdate = new JButton("Update Semester");
+        btnDelete = new JButton("Delete Semester");
         btnBack = new JButton("Back");
 
-        lblHeading = new JLabel("Enrollment", SwingConstants.CENTER);
+        lblHeading = new JLabel("Semester", SwingConstants.CENTER);
 
         hFt = new Font("Arial", Font.BOLD, 30);
     }
 
     public static void main(String[] args) {
-        new EnrollMainGUI().setGUI();
+        new SemesterMainGUI().setGUI();
     }
 
     public void setGUI() {
@@ -78,20 +78,20 @@ public class EnrollMainGUI extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
-            case "View All Enrollments":
-                GetEnrolls.main(null);
+            case "View All Semester":
+                GetSemester.main(null);
                 this.setVisible(false);
                 break;
-            case "Enroll New Student":
-                EnrollStudent.main(null);
+            case "Add New Semester":
+                AddSemester.main(null);
                 this.setVisible(false);
                 break;
-            case "Update Student Enrollment":
-                UpdateEnrolls.main(null);
+            case "Update Semester":
+                UpdateSemeter.main(null);
                 this.setVisible(false);
                 break;
-            case "Delete Student Enrollment":
-                DeleteEnrolls.main(null);
+            case "Delete Semester":
+                DeleteSemester.main(null);
                 this.setVisible(false);
                 break;
             case "Back":

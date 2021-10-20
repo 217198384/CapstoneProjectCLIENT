@@ -90,7 +90,7 @@ public class AddBuildingGUI extends JFrame implements ActionListener {
 
     public void store(String buildingID, String buildingName, String buildingAddress, String roomCountString) {
         try {
-            final String URL = "http://localhost:8080/building/create";
+            final String URL = "http://localhost:8080/building/createl";
             int roomCount = Integer.parseInt(roomCountString);
             Building building = BuildingFactory.build(buildingID, roomCount, buildingName, buildingAddress);
             Gson g = new Gson();

@@ -1,13 +1,10 @@
-package za.ac.cput.views.tertiaryInstitution.Department;
+package za.ac.cput.views.tertiaryInstitution.department;
 
 import com.google.gson.Gson;
 import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import za.ac.cput.entity.tertiaryInstitution.Course;
 import za.ac.cput.entity.tertiaryInstitution.Department;
-import za.ac.cput.views.tertiaryInstitution.Course.CourseMainGUI;
-import za.ac.cput.views.tertiaryInstitution.Course.DeleteCourse;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

@@ -1,4 +1,4 @@
-package za.ac.cput.views.tertiaryInstitution.Department;
+package za.ac.cput.views.tertiaryInstitution.department;
 
 import za.ac.cput.views.MainGUI;
 

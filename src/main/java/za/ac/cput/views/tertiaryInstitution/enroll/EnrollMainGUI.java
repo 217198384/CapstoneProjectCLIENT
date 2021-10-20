@@ -1,34 +1,44 @@
-package za.ac.cput.views.tertiaryInstitution.Course;
+package za.ac.cput.views.tertiaryInstitution.enroll;
 
 import za.ac.cput.views.MainGUI;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class CourseMainGUI extends JFrame implements ActionListener {
+public class EnrollMainGUI extends JFrame implements ActionListener {
+    private final JButton btnView;
+    private final JButton btnAdd;
+    private final JButton btnUpdate;
+    private final JButton btnDelete;
+    private final JButton btnBack;
+    private final JLabel lblHeading;
+    private final JPanel pN;
+    private final JPanel pC;
+    private final JPanel pS;
+    private final Font hFt;
 
-    private JButton btnView, btnAdd, btnUpdate, btnDelete, btnBack;
-    private JLabel lblHeading;
-    private JPanel pN, pC, pS;
-    private Font hFt;
-
-    public CourseMainGUI(){
-        super("Course Main Menu");
+    public EnrollMainGUI() {
+        super("Enroll Main Menu");
 
         pN = new JPanel();
         pC = new JPanel();
         pS = new JPanel();
 
-        btnView = new JButton("View All Courses");
-        btnAdd = new JButton("Add New Course");
-        btnUpdate = new JButton("Update Course");
-        btnDelete = new JButton("Delete Course");
+        btnView = new JButton("View All Enrollments");
+        btnAdd = new JButton("Enroll New Student");
+        btnUpdate = new JButton("Update Student Enrollment");
+        btnDelete = new JButton("Delete Student Enrollment");
         btnBack = new JButton("Back");
 
-        lblHeading = new JLabel("Course", SwingConstants.CENTER);
+        lblHeading = new JLabel("Enrollment", SwingConstants.CENTER);
 
         hFt = new Font("Arial", Font.BOLD, 30);
+    }
+
+    public static void main(String[] args) {
+        new EnrollMainGUI().setGUI();
     }
 
     public void setGUI() {
@@ -49,17 +59,17 @@ public class CourseMainGUI extends JFrame implements ActionListener {
 
         pS.add(btnBack);
 
+
         this.add(pN, BorderLayout.NORTH);
         this.add(pC, BorderLayout.CENTER);
         this.add(pS, BorderLayout.SOUTH);
 
         btnView.addActionListener(this);
-        btnAdd .addActionListener(this);
+        btnAdd.addActionListener(this);
         btnUpdate.addActionListener(this);
         btnDelete.addActionListener(this);
         btnBack.addActionListener(this);
 
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
         this.setVisible(true);
         this.setLocationRelativeTo(null);
@@ -67,36 +77,27 @@ public class CourseMainGUI extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        switch (e.getActionCommand()){
-            case "View All Courses":
-                GetCourse.main(null);
+        switch (e.getActionCommand()) {
+            case "View All Enrollments":
+                GetEnrolls.main(null);
                 this.setVisible(false);
                 break;
-
-            case "Add New Course":
-                AddCourse.main(null);
+            case "Enroll New Student":
+                EnrollStudent.main(null);
                 this.setVisible(false);
                 break;
-
-            case "Update Course":
-                UpdateCourse.main(null);
+            case "Update Student Enrollment":
+                UpdateEnrolls.main(null);
                 this.setVisible(false);
                 break;
-
-            case "Delete Course":
-                DeleteCourse.main(null);
+            case "Delete Student Enrollment":
+                DeleteEnrolls.main(null);
                 this.setVisible(false);
                 break;
-
             case "Back":
                 MainGUI.main(null);
                 this.setVisible(false);
                 break;
         }
     }
-
-    public static void main(String[] args) {
-        new CourseMainGUI().setGUI();
-    }
 }
-

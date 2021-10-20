@@ -1,44 +1,34 @@
-package za.ac.cput.views.semester;
+package za.ac.cput.views.tertiaryInstitution.course;
 
 import za.ac.cput.views.MainGUI;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class SemesterMainGUI extends JFrame implements ActionListener {
-    private final JButton btnView;
-    private final JButton btnAdd;
-    private final JButton btnUpdate;
-    private final JButton btnDelete;
-    private final JButton btnBack;
-    private final JLabel lblHeading;
-    private final JPanel pN;
-    private final JPanel pC;
-    private final JPanel pS;
-    private final Font hFt;
+public class CourseMainGUI extends JFrame implements ActionListener {
 
-    public SemesterMainGUI() {
-        super("Semester Main Menu");
+    private JButton btnView, btnAdd, btnUpdate, btnDelete, btnBack;
+    private JLabel lblHeading;
+    private JPanel pN, pC, pS;
+    private Font hFt;
+
+    public CourseMainGUI(){
+        super("Course Main Menu");
 
         pN = new JPanel();
         pC = new JPanel();
         pS = new JPanel();
 
-        btnView = new JButton("View All Semester");
-        btnAdd = new JButton("Add New Semester");
-        btnUpdate = new JButton("Update Semester");
-        btnDelete = new JButton("Delete Semester");
+        btnView = new JButton("View All Courses");
+        btnAdd = new JButton("Add New Course");
+        btnUpdate = new JButton("Update Course");
+        btnDelete = new JButton("Delete Course");
         btnBack = new JButton("Back");
 
-        lblHeading = new JLabel("Semester", SwingConstants.CENTER);
+        lblHeading = new JLabel("Course", SwingConstants.CENTER);
 
         hFt = new Font("Arial", Font.BOLD, 30);
-    }
-
-    public static void main(String[] args) {
-        new SemesterMainGUI().setGUI();
     }
 
     public void setGUI() {
@@ -59,17 +49,17 @@ public class SemesterMainGUI extends JFrame implements ActionListener {
 
         pS.add(btnBack);
 
-
         this.add(pN, BorderLayout.NORTH);
         this.add(pC, BorderLayout.CENTER);
         this.add(pS, BorderLayout.SOUTH);
 
         btnView.addActionListener(this);
-        btnAdd.addActionListener(this);
+        btnAdd .addActionListener(this);
         btnUpdate.addActionListener(this);
         btnDelete.addActionListener(this);
         btnBack.addActionListener(this);
 
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
         this.setVisible(true);
         this.setLocationRelativeTo(null);
@@ -77,27 +67,36 @@ public class SemesterMainGUI extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        switch (e.getActionCommand()) {
-            case "View All Enrollments":
-                GetSemester.main(null);
+        switch (e.getActionCommand()){
+            case "View All Courses":
+                GetCourse.main(null);
                 this.setVisible(false);
                 break;
-            case "Add New Semester":
-                AddSemester.main(null);
+
+            case "Add New Course":
+                AddCourse.main(null);
                 this.setVisible(false);
                 break;
-            case "Update Semester":
-                UpdateSemeter.main(null);
+
+            case "Update Course":
+                UpdateCourse.main(null);
                 this.setVisible(false);
                 break;
-            case "Delete Semester":
-                DeleteSemester.main(null);
+
+            case "Delete Course":
+                DeleteCourse.main(null);
                 this.setVisible(false);
                 break;
+
             case "Back":
                 MainGUI.main(null);
                 this.setVisible(false);
                 break;
         }
     }
+
+    public static void main(String[] args) {
+        new CourseMainGUI().setGUI();
+    }
 }
+

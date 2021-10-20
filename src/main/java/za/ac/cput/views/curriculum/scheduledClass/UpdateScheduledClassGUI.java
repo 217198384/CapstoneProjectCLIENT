@@ -134,7 +134,7 @@ public class UpdateScheduledClassGUI extends JFrame implements ActionListener
 
         try
         {
-            final String URL = "http://localhost:8080/scheduledClass/getall";
+            final String URL = "http://localhost:8080/scheduledClass/getAll";
             String responseBody = run(URL);
             JSONArray scheduledClasses = new JSONArray(responseBody);
 
