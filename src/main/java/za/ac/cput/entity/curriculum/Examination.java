@@ -15,8 +15,9 @@ import java.time.LocalDate;
 public class Examination
 {
     @Id
+    private String examId;
     private int subjectCode;
-    private String examDesc, examId, examDate;
+    private String examDesc, examDate;
 
     protected Examination() {}
 

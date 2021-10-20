@@ -177,6 +177,8 @@ public class UpdateExaminationGUI extends JFrame implements ActionListener
             String responseBody = run(URL);
             Gson gson = new Gson();
             examination = gson.fromJson(responseBody, Examination.class);
+
+            System.out.println("ERROR" + examination);
         }
         catch (Exception e)
         {
