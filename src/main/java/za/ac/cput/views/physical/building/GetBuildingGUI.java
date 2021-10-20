@@ -1,4 +1,4 @@
-package za.ac.cput.views.student;
+package za.ac.cput.views.physical.building;
 
 import com.google.gson.Gson;
 import okhttp3.OkHttpClient;
@@ -6,7 +6,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import za.ac.cput.entity.person.Student;
+import za.ac.cput.entity.physical.Building;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -15,15 +15,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-public class GetStudents extends JFrame implements ActionListener {
+public class GetBuildingGUI extends JFrame implements ActionListener {
+
     private static OkHttpClient client = new OkHttpClient();
 
     private JTable table;
     private JPanel pC, pS;
     private JButton btnBack;
 
-    public GetStudents() {
-        super("All Students");
+    public GetBuildingGUI() {
+        super("All Buildings");
         table = new JTable();
 
         pC = new JPanel();
@@ -55,32 +56,28 @@ public class GetStudents extends JFrame implements ActionListener {
 
     public void getAll() {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
-        model.addColumn("Student ID");
-        model.addColumn("First Name");
-        model.addColumn("Last Name");
-        model.addColumn("Age");
-        model.addColumn("Email Address");
-        model.addColumn("Phone Number");
+        model.addColumn("Building ID");
+        model.addColumn("Building Name");
+        model.addColumn("Room Count");
+        model.addColumn("Building Address");
 
         try {
-            final String URL = "http://localhost:8080/student/getall";
+            final String URL = "http://localhost:8080/building/getall";
             String responseBody = run(URL);
-            JSONArray students = new JSONArray(responseBody);
+            JSONArray buildings = new JSONArray(responseBody);
 
-            for (int i = 0; i < students.length(); i++) {
-                JSONObject student = students.getJSONObject(i);
+            for (int i = 0; i < buildings.length(); i++) {
+                JSONObject building = buildings.getJSONObject(i);
 
                 Gson g = new Gson();
-                Student s = g.fromJson(student.toString(), Student.class);
+                Building b = g.fromJson(building.toString(), Building.class);
 
-                Object[] rowData = new Object[6];
-                    rowData[0] = s.getStudentId();
-                    rowData[1] = s.getFirstName();
-                    rowData[2] = s.getLastName();
-                    rowData[3] = s.getAge();
-                    rowData[4] = s.getEmailAddress();
-                    rowData[5] = s.getContactNo();
-                    model.addRow(rowData);
+                Object[] rowData = new Object[4];
+                rowData[0] = b.getBuildingID();
+                rowData[1] = b.getBuildingName();
+                rowData[2] = b.getBuildingAddress();
+                rowData[3] = b.getRoomCount();
+                model.addRow(rowData);
             }
         }
         catch (Exception e) {
@@ -98,12 +95,13 @@ public class GetStudents extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnBack) {
-            StudentMainGUI.main(null);
+            BuildingMainGUI.main(null);
             this.setVisible(false);
         }
     }
 
     public static void main(String[] args) {
-        new GetStudents().setGUI();
+
+        new GetBuildingGUI().setGUI();
     }
 }

@@ -1,10 +1,13 @@
-package za.ac.cput.views.student;
+package za.ac.cput.views.tertiaryInstitution.Department;
 
 import com.google.gson.Gson;
 import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import za.ac.cput.entity.person.Student;
+import za.ac.cput.entity.tertiaryInstitution.Course;
+import za.ac.cput.entity.tertiaryInstitution.Department;
+import za.ac.cput.views.tertiaryInstitution.Course.CourseMainGUI;
+import za.ac.cput.views.tertiaryInstitution.Course.DeleteCourse;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -14,35 +17,35 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.Objects;
 
-public class DeleteStudent extends JFrame implements ActionListener {
+public class DeleteDepartment extends JFrame implements ActionListener {
     private static OkHttpClient client = new OkHttpClient();
 
     private JTable table;
     private JPanel pC, pS;
     private JButton btnDelete, btnBack;
     private JLabel lblDelete, blank1, blank2, blank3, blank4;
-    private JTextField txtDeleteId;
+    private JTextField txtDeleteDept;
 
-    public DeleteStudent() {
-        super("Delete Student");
+    public DeleteDepartment(){
+        super("Delete Course");
         table = new JTable();
 
         pC = new JPanel();
         pS = new JPanel();
 
-        btnDelete = new JButton("Delete");
-        btnBack = new JButton("Back");
-
-        lblDelete = new JLabel(" Enter Student ID to Delete: ");
-        txtDeleteId = new JTextField();
+        lblDelete = new JLabel(" Enter Department ID to Delete: ");
+        txtDeleteDept = new JTextField();
 
         blank1 = new JLabel("");
         blank2 = new JLabel("");
         blank3 = new JLabel("");
         blank4 = new JLabel("");
+
+        btnDelete = new JButton("Delete");
+        btnBack = new JButton("Back");
     }
 
-    public void setGUI() {
+    public void setGUI(){
         pC.setLayout(new GridLayout(1,1));
         pS.setLayout(new GridLayout(4,2));
 
@@ -52,7 +55,7 @@ public class DeleteStudent extends JFrame implements ActionListener {
         pS.add(blank2);
 
         pS.add(lblDelete);
-        pS.add(txtDeleteId);
+        pS.add(txtDeleteDept);
 
         pS.add(blank3);
         pS.add(blank4);
@@ -70,6 +73,7 @@ public class DeleteStudent extends JFrame implements ActionListener {
 
         table.setRowHeight(30);
         this.add(new JScrollPane(table));
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
         this.setSize(1000, 450);
         this.setLocationRelativeTo(null);
@@ -78,35 +82,28 @@ public class DeleteStudent extends JFrame implements ActionListener {
 
     public void displayTable() {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
-        model.addColumn("Student ID");
-        model.addColumn("First Name");
-        model.addColumn("Last Name");
-        model.addColumn("Age");
-        model.addColumn("Email Address");
-        model.addColumn("Phone Number");
+        model.addColumn("Department ID");
+        model.addColumn("Department Name");
+        model.addColumn("Department Desc");
 
-        try {
-            final String URL = "http://localhost:8080/student/getall";
+        try{
+            final String URL = "http://localhost:8080/department/getAll";
             String responseBody = run(URL);
-            JSONArray students = new JSONArray(responseBody);
+            JSONArray department = new JSONArray(responseBody);
 
-            for (int i = 0; i < students.length(); i++) {
-                JSONObject student = students.getJSONObject(i);
+            for(int i = 0; i < department.length(); i++){
+                JSONObject course = department.getJSONObject(i);
 
                 Gson g = new Gson();
-                Student s = g.fromJson(student.toString(), Student.class);
+                Department d = g.fromJson(course.toString(), Department.class);
 
-                Object[] rowData = new Object[6];
-                rowData[0] = s.getStudentId();
-                rowData[1] = s.getFirstName();
-                rowData[2] = s.getLastName();
-                rowData[3] = s.getAge();
-                rowData[4] = s.getEmailAddress();
-                rowData[5] = s.getContactNo();
+                Object[] rowData = new Object[3];
+                rowData[0] = d.getDepartmentId();
+                rowData[1] = d.getDepartmentName();
+                rowData[2] = d.getDepartmentDesc();
                 model.addRow(rowData);
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
@@ -118,33 +115,32 @@ public class DeleteStudent extends JFrame implements ActionListener {
         }
     }
 
-    public boolean request(String id) throws IOException {
-        final String URL = "http://localhost:8080/student/delete/" + id;
-        RequestBody body = RequestBody
-                .create( "charset=utf-8", MediaType.parse("application/json"));
+    public boolean request(String id) throws IOException{
+        final String URL = "http://localhost:8080/department/delete" + id;
+        RequestBody body = RequestBody.create( "charset=utf-8", MediaType.parse("application/json"));
         Request request = new Request.Builder()
                 .post(body)
                 .addHeader("Accept", "application/json")
                 .url(URL)
                 .build();
 
-        Response response = client.newCall(request).execute();
+        Response response =client.newCall(request).execute();
         return response.isSuccessful();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnDelete) {
-            if (!Objects.equals(txtDeleteId.getText(), "")) {
-                int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete?", "Delete Student", JOptionPane.YES_NO_OPTION);
+            if (!Objects.equals(txtDeleteDept.getText(), "")) {
+                int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete?", "Delete Course", JOptionPane.YES_NO_OPTION);
                 if (result == JOptionPane.YES_OPTION) {
                     try {
-                        if(request(txtDeleteId.getText())) {
-                            JOptionPane.showMessageDialog(null,"Student Deleted");
-                            StudentMainGUI.main(null);
+                        if(request(txtDeleteDept.getText())) {
+                            JOptionPane.showMessageDialog(null,"Course Deleted");
+                            DepartmentMainGUI.main(null);
                             this.setVisible(false);
                         } else {
-                            JOptionPane.showMessageDialog(null,"Problem, Student Not Deleted");
+                            JOptionPane.showMessageDialog(null,"Issue! Course Could Not Delete");
                         }
                     } catch (IOException ex) {
                         ex.printStackTrace();
@@ -154,12 +150,12 @@ public class DeleteStudent extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Please enter a value");
             }
         } else if (e.getSource() == btnBack) {
-            StudentMainGUI.main(null);
+            DepartmentMainGUI.main(null);
             this.setVisible(false);
         }
     }
 
     public static void main(String[] args) {
-        new DeleteStudent().setGUI();
+        new DeleteDepartment().setGUI();
     }
 }

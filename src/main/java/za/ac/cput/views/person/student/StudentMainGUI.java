@@ -1,4 +1,4 @@
-package za.ac.cput.views.physical;
+package za.ac.cput.views.person.student;
 
 import za.ac.cput.views.MainGUI;
 
@@ -7,34 +7,31 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class RoomMainGUI extends JFrame implements ActionListener {
-
+public class StudentMainGUI extends JFrame implements ActionListener {
     private JButton btnView, btnAdd, btnUpdate, btnDelete, btnBack;
     private JLabel lblHeading;
     private JPanel pN, pC, pS;
     private Font hFt;
 
-    public RoomMainGUI() {
-
-        super("Rooms Main Menu");
+    public StudentMainGUI() {
+        super("Student Main Menu");
 
         pN = new JPanel();
         pC = new JPanel();
         pS = new JPanel();
 
-        btnView = new JButton("View All Rooms");
-        btnAdd = new JButton("Add New Rooms");
-        btnUpdate = new JButton("Update Rooms");
-        btnDelete = new JButton("Delete Rooms");
+        btnView = new JButton("View All Students");
+        btnAdd = new JButton("Add New Student");
+        btnUpdate = new JButton("Update Student");
+        btnDelete = new JButton("Delete Student");
         btnBack = new JButton("Back");
 
-        lblHeading = new JLabel("Rooms", SwingConstants.CENTER);
+        lblHeading = new JLabel("Student", SwingConstants.CENTER);
 
         hFt = new Font("Arial", Font.BOLD, 30);
     }
 
     public void setGUI() {
-
         pN.setLayout(new FlowLayout(FlowLayout.CENTER));
         pC.setLayout(new GridLayout(4, 1));
         pS.setLayout(new GridLayout(1, 1));
@@ -70,10 +67,21 @@ public class RoomMainGUI extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
-        switch (e.getActionCommand()) {
-            case "Add New Rooms":
-                AddRoomGUI.main(null);
+        switch(e.getActionCommand()) {
+            case "View All Students":
+                GetStudents.main(null);
+                this.setVisible(false);
+                break;
+            case "Add New Student":
+                AddStudent.main(null);
+                this.setVisible(false);
+                break;
+            case "Update Student":
+                UpdateStudent.main(null);
+                this.setVisible(false);
+                break;
+            case "Delete Student":
+                DeleteStudent.main(null);
                 this.setVisible(false);
                 break;
             case "Back":
@@ -84,7 +92,6 @@ public class RoomMainGUI extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
-
-        new RoomMainGUI().setGUI();
+        new StudentMainGUI().setGUI();
     }
 }

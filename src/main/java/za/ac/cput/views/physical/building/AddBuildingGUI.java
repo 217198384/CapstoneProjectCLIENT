@@ -1,12 +1,15 @@
-package za.ac.cput.views.physical;
+package za.ac.cput.views.physical.building;
 
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
+import com.google.gson.Gson;
+import okhttp3.*;
+import za.ac.cput.entity.physical.Building;
+import za.ac.cput.factory.physical.BuildingFactory;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class AddBuildingGUI extends JFrame implements ActionListener {
 
@@ -30,7 +33,7 @@ public class AddBuildingGUI extends JFrame implements ActionListener {
         lblBuildingID = new JLabel("Building ID: ");
         lblBuildingName = new JLabel("Building Name: ");
         lblBuildingAddress = new JLabel("Building Address: ");
-        lblRoomCount = new JLabel("Building Address: ");
+        lblRoomCount = new JLabel("Room Count: ");
 
 
         txtBuildingID = new JTextField(30);
@@ -74,13 +77,42 @@ public class AddBuildingGUI extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        switch(e.getActionCommand()){
-            case "Save":
-                break;
-            case "Cancel":
+        if (e.getSource() == btnSave) {
+            store(txtBuildingID.getText(),
+                    txtBuildingName.getText(),
+                    txtBuildingAddress.getText(),
+                    txtRoomCount.getText());
+        } else if (e.getSource() == btnCancel) {
+            BuildingMainGUI.main(null);
+            this.setVisible(false);
+        }
+    }
+
+    public void store(String buildingID, String buildingName, String buildingAddress, String roomCountString) {
+        try {
+            final String URL = "http://localhost:8080/building/create";
+            int roomCount = Integer.parseInt(roomCountString);
+            Building building = BuildingFactory.build(buildingID, roomCount, buildingName, buildingAddress);
+            Gson g = new Gson();
+            String jsonString = g.toJson(building);
+            String r = post(URL, jsonString);
+            if (r != null) {
+                JOptionPane.showMessageDialog(null, "Building saved successfully!");
                 BuildingMainGUI.main(null);
                 this.setVisible(false);
-                break;
+            } else {
+                JOptionPane.showMessageDialog(null, "Oops, Building not saved.");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+
+    public String post(final String url, String json) throws IOException {
+        RequestBody body = RequestBody.create(json, JSON);
+        Request request = new Request.Builder().url(url).post(body).build();
+        try (Response response = client.newCall(request).execute()) {
+            return response.body().string();
         }
     }
 

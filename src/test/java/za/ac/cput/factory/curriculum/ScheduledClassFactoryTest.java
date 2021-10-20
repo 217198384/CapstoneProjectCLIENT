@@ -18,7 +18,7 @@ class ScheduledClassFactoryTest
     @Test
     void test()
     {
-        ScheduledClass scheduledClass = ScheduledClassFactory.build("1",1,1,"10:30");
+        ScheduledClass scheduledClass = ScheduledClassFactory.build(1,1,"10:30");
         System.out.println(scheduledClass);
         assertNotNull(scheduledClass);
     }
