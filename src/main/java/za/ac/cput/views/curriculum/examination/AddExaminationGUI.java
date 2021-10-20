@@ -17,7 +17,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Date;
 
 public class AddExaminationGUI extends JFrame implements ActionListener
 {
@@ -44,6 +47,7 @@ public class AddExaminationGUI extends JFrame implements ActionListener
         txtDesc = new JTextField(30);
         txtSubjectCode = new JTextField(30);
         txtDate = new JTextField(30);
+        txtDate.setText("YYYY-MM-DD");
 
         btnSave = new JButton("Save");
         btnCancel = new JButton("Cancel");
@@ -97,7 +101,7 @@ public class AddExaminationGUI extends JFrame implements ActionListener
         try
         {
             final String URL = "http://localhost:8080/examination/create";
-            Examination examination = ExaminationFactory.build(Integer.parseInt(subjectCode), desc, LocalDate.parse(date));
+            Examination examination = ExaminationFactory.build(Integer.parseInt(subjectCode), desc, date);
             Gson g = new Gson();
             String jsonString = g.toJson(examination);
             String r = post(URL, jsonString);
