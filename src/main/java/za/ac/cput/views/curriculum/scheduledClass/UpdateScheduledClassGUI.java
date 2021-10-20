@@ -192,7 +192,7 @@ public class UpdateScheduledClassGUI extends JFrame implements ActionListener
 
         try
         {
-            final String URL = "http://localhost:8080/examination/update";
+            final String URL = "http://localhost:8080/scheduledClass/update";
 
             scheduledClass = new ScheduledClass.Builder()
                     .setScheduledClassId(txtUpdateId.getText())
