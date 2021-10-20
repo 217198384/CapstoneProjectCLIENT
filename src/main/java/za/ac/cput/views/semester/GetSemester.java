@@ -1,4 +1,4 @@
-package za.ac.cput.views.enroll;
+package za.ac.cput.views.semester;
 
 import com.google.gson.Gson;
 import okhttp3.OkHttpClient;
@@ -6,7 +6,8 @@ import okhttp3.Request;
 import okhttp3.Response;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import za.ac.cput.entity.tertiaryInstitution.Enroll;
+import za.ac.cput.entity.tertiaryInstitution.Semester;
+import za.ac.cput.views.enroll.EnrollMainGUI;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -15,7 +16,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-public class GetEnrolls extends JFrame implements ActionListener {
+public class GetSemester extends JFrame implements ActionListener {
     private static final OkHttpClient client = new OkHttpClient();
 
     private final JTable table;
@@ -23,8 +24,8 @@ public class GetEnrolls extends JFrame implements ActionListener {
     private final JPanel pS;
     private final JButton btnBack;
 
-    public GetEnrolls() {
-        super("All Enrollments");
+    public GetSemester() {
+        super("Semesters");
         table = new JTable();
 
         pC = new JPanel();
@@ -41,7 +42,7 @@ public class GetEnrolls extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
-        new GetEnrolls().setGUI();
+        new GetSemester().setGUI();
     }
 
     public void setGUI() {
@@ -67,28 +68,27 @@ public class GetEnrolls extends JFrame implements ActionListener {
 
     public void getAll() {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
-        model.addColumn("Student ID");
-        model.addColumn("Course Code");
-        model.addColumn("Date");
-        model.addColumn("PaymentReceived");
+        model.addColumn("Semester ID");
+        model.addColumn("Semester Start");
+        model.addColumn("Semester End");
 
 
         try {
-            final String URL = "http://localhost:8080/enroll/getall";
+            final String URL = "http://localhost:8080/semester/getall";
             String responseBody = run(URL);
-            JSONArray enrolls = new JSONArray(responseBody);
+            JSONArray semesters = new JSONArray(responseBody);
 
-            for (int i = 0; i < enrolls.length(); i++) {
-                JSONObject enroll = enrolls.getJSONObject(i);
+            for (int i = 0; i < semesters.length(); i++) {
+                JSONObject enroll = semesters.getJSONObject(i);
 
                 Gson g = new Gson();
-                Enroll s = g.fromJson(enroll.toString(), Enroll.class);
+                Semester s = g.fromJson(enroll.toString(), Semester.class);
 
-                Object[] rowData = new Object[4];
-                rowData[0] = s.getStudentID();
-                rowData[1] = s.getCourseCode();
-                rowData[2] = s.getDate();
-                rowData[3] = s.getPaymentReceived();
+                Object[] rowData = new Object[3];
+                rowData[0] = s.getSemesterID();
+                rowData[1] = s.getSemesterStart();
+                rowData[2] = s.getSemesterEnd();
+
                 model.addRow(rowData);
             }
         } catch (Exception e) {
@@ -99,7 +99,7 @@ public class GetEnrolls extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnBack) {
-            EnrollMainGUI.main(null);
+            SemesterMainGUI.main(null);
             this.setVisible(false);
         }
     }

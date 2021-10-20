@@ -1,9 +1,10 @@
-package za.ac.cput.views.enroll;
+package za.ac.cput.views.semester;
 
 import com.google.gson.Gson;
 import okhttp3.*;
-import za.ac.cput.entity.tertiaryInstitution.Enroll;
-import za.ac.cput.factory.tertiaryInstitution.EnrollFactory;
+import za.ac.cput.entity.tertiaryInstitution.Semester;
+import za.ac.cput.factory.tertiaryInstitution.SemesterFactory;
+import za.ac.cput.views.enroll.EnrollMainGUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,36 +12,33 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-public class EnrollStudent extends JFrame implements ActionListener {
+public class AddSemester extends JFrame implements ActionListener {
     public static final MediaType JSON =
             MediaType.get("application/json; charset=utf-8");
     private static final OkHttpClient client = new OkHttpClient();
     public JPanel pN, pS;
-    private final JLabel lblStudentID;
-    private final JLabel lblCourseCode;
-    private final JLabel lblDate;
-    private final JLabel lblPaymentReceived;
-    private final JTextField txtStudentID;
-    private final JTextField txtCourseCode;
-    private final JTextField txtDate;
-    private final JTextField txtPaymentReceived;
+    private final JLabel lblSemesterID;
+    private final JLabel lblSemesterStart;
+    private final JLabel lblSemesterEnd;
+    private final JTextField txtSemesterID;
+    private final JTextField txtSemesterStart;
+    private final JTextField txtSemesterEnd;
     private final JButton btnSave;
     private final JButton btnCancel;
 
-    public EnrollStudent() {
-        super("Enroll Student");
+    public AddSemester() {
+        super("Semester");
         pN = new JPanel();
         pS = new JPanel();
 
-        lblStudentID = new JLabel("Student ID: ");
-        lblCourseCode = new JLabel("Course Code: ");
-        lblDate = new JLabel("Date: ");
-        lblPaymentReceived = new JLabel("Payment Received: ");
+        lblSemesterID = new JLabel("Semester ID: ");
+        lblSemesterStart = new JLabel("Semester Start: ");
+        lblSemesterEnd = new JLabel("Semester End: ");
 
-        txtStudentID = new JTextField(30);
-        txtCourseCode = new JTextField(30);
-        txtDate = new JTextField(30);
-        txtPaymentReceived = new JTextField(30);
+
+        txtSemesterID = new JTextField(30);
+        txtSemesterStart = new JTextField(30);
+        txtSemesterEnd = new JTextField(30);
 
 
         btnSave = new JButton("Save");
@@ -50,21 +48,21 @@ public class EnrollStudent extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
-        new EnrollStudent().setGUI();
+        new AddSemester().setGUI();
     }
 
     public void setGUI() {
         pN.setLayout(new GridLayout(0, 2));
         pS.setLayout(new GridLayout(1, 2));
 
-        pN.add(lblStudentID);
-        pN.add(lblCourseCode);
-        pN.add(lblDate);
-        pN.add(lblPaymentReceived);
-        pN.add(txtStudentID);
-        pN.add(txtCourseCode);
-        pN.add(txtDate);
-        pN.add(txtPaymentReceived);
+        pN.add(lblSemesterID);
+        pN.add(lblSemesterStart);
+        pN.add(lblSemesterEnd);
+
+        pN.add(txtSemesterID);
+        pN.add(txtSemesterStart);
+        pN.add(txtSemesterEnd);
+
 
         pS.add(btnSave);
         pS.add(btnCancel);
@@ -86,31 +84,31 @@ public class EnrollStudent extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnSave) {
-            store(txtStudentID.getText(),
-                    txtCourseCode.getText(),
-                    txtDate.getText(),
-                    txtPaymentReceived.getText());
+            store(txtSemesterID.getText(),
+                    txtSemesterStart.getText(),
+
+                    txtSemesterEnd.getText());
 
         } else if (e.getSource() == btnCancel) {
-            EnrollMainGUI.main(null);
+            SemesterMainGUI.main(null);
             this.setVisible(false);
         }
     }
 
-    public void store(String studentID, String courseCode, String date, String paymentReceived) {
+    public void store(String semesterID, String semesterStart, String semesterEnd) {
         try {
-            final String URL = "http://localhost:8080/enroll/create";
+            final String URL = "http://localhost:8080/semester/create";
 
-            Enroll enroll = EnrollFactory.build(studentID, courseCode, date, paymentReceived);
+            Semester semester = SemesterFactory.build(semesterID, semesterStart, semesterEnd);
             Gson g = new Gson();
-            String jsonString = g.toJson(enroll);
+            String jsonString = g.toJson(semester);
             String r = post(URL, jsonString);
             if (r != null) {
-                JOptionPane.showMessageDialog(null, "Student Enrollment Complete");
-                EnrollMainGUI.main(null);
+                JOptionPane.showMessageDialog(null, "Semester Added");
+                SemesterMainGUI.main(null);
                 this.setVisible(false);
             } else {
-                JOptionPane.showMessageDialog(null, "Student could not be enrolled");
+                JOptionPane.showMessageDialog(null, "Semester Could Not Be Added");
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -125,6 +123,4 @@ public class EnrollStudent extends JFrame implements ActionListener {
         }
     }
 }
-
-
 

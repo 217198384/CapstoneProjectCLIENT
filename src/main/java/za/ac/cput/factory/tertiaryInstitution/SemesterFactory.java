@@ -1,8 +1,6 @@
 package za.ac.cput.factory.tertiaryInstitution;
 import za.ac.cput.entity.tertiaryInstitution.Semester;
 
-import java.util.Date;
-
 /**
  * SemesterFactory.java
  * TTD for SemesterFactory
@@ -11,7 +9,7 @@ import java.util.Date;
  */
 
 public class SemesterFactory {
-   public static Semester build(String semesterID, Date semesterStart, Date semesterEnd){
+   public static Semester build(String semesterID, String semesterStart, String semesterEnd){
        if(semesterID.equals("")||semesterStart.equals("")  || semesterEnd.equals(""))
            return null;
 

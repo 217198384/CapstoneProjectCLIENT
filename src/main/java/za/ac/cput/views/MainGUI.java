@@ -10,6 +10,7 @@ package za.ac.cput.views;
 import za.ac.cput.views.enroll.EnrollMainGUI;
 import za.ac.cput.views.physical.BuildingMainGUI;
 import za.ac.cput.views.physical.RoomMainGUI;
+import za.ac.cput.views.semester.SemesterMainGUI;
 import za.ac.cput.views.student.StudentMainGUI;
 
 import javax.swing.*;
@@ -121,6 +122,8 @@ public class MainGUI extends JFrame implements ActionListener {
             case "Scheduled Class":
                 break;
             case "Semester":
+                SemesterMainGUI.main(null);
+                this.setVisible(false);
                 break;
             case "Student":
                 StudentMainGUI.main(null);

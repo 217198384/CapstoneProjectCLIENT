@@ -1,10 +1,10 @@
-package za.ac.cput.views.enroll;
+package za.ac.cput.views.semester;
 
 import com.google.gson.Gson;
 import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import za.ac.cput.entity.tertiaryInstitution.Enroll;
+import za.ac.cput.entity.tertiaryInstitution.Semester;
 import za.ac.cput.views.student.StudentMainGUI;
 
 import javax.swing.*;
@@ -15,7 +15,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.Objects;
 
-public class DeleteEnrolls extends JFrame implements ActionListener {
+public class DeleteSemester extends JFrame implements ActionListener {
     private static final OkHttpClient client = new OkHttpClient();
 
     private final JTable table;
@@ -30,7 +30,7 @@ public class DeleteEnrolls extends JFrame implements ActionListener {
     private final JLabel blank4;
     private final JTextField txtDeleteId;
 
-    public DeleteEnrolls() {
+    public DeleteSemester() {
         super("Delete Enrolled Student");
         table = new JTable();
 
@@ -57,7 +57,7 @@ public class DeleteEnrolls extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
-        new DeleteEnrolls().setGUI();
+        new DeleteSemester().setGUI();
     }
 
     public void setGUI() {
@@ -96,28 +96,27 @@ public class DeleteEnrolls extends JFrame implements ActionListener {
 
     public void displayTable() {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
-        model.addColumn("Student ID");
-        model.addColumn("Course Code");
-        model.addColumn("Date");
-        model.addColumn("Payment Received");
+        model.addColumn("Semester ID");
+        model.addColumn("Semester Start");
+        model.addColumn("Semester End");
 
 
         try {
             final String URL = "http://localhost:8080/enroll/getall";
             String responseBody = run(URL);
-            JSONArray enrolls = new JSONArray(responseBody);
+            JSONArray semesters = new JSONArray(responseBody);
 
-            for (int i = 0; i < enrolls.length(); i++) {
-                JSONObject enroll = enrolls.getJSONObject(i);
+            for (int i = 0; i < semesters.length(); i++) {
+                JSONObject enroll = semesters.getJSONObject(i);
 
                 Gson g = new Gson();
-                Enroll s = g.fromJson(enroll.toString(), Enroll.class);
+                Semester s = g.fromJson(enroll.toString(), Semester.class);
 
-                Object[] rowData = new Object[4];
-                rowData[0] = s.getStudentID();
-                rowData[1] = s.getCourseCode();
-                rowData[2] = s.getDate();
-                rowData[3] = s.getPaymentReceived();
+                Object[] rowData = new Object[3];
+                rowData[0] = s.getSemesterID();
+                rowData[1] = s.getSemesterStart();
+                rowData[2] = s.getSemesterEnd();
+
 
                 model.addRow(rowData);
             }
@@ -144,15 +143,15 @@ public class DeleteEnrolls extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnDelete) {
             if (!Objects.equals(txtDeleteId.getText(), "")) {
-                int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete?", "Delete Student", JOptionPane.YES_NO_OPTION);
+                int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete?", "Delete Semester", JOptionPane.YES_NO_OPTION);
                 if (result == JOptionPane.YES_OPTION) {
                     try {
                         if (request(txtDeleteId.getText())) {
-                            JOptionPane.showMessageDialog(null, "Student Deleted");
+                            JOptionPane.showMessageDialog(null, "Semester Deleted");
                             StudentMainGUI.main(null);
                             this.setVisible(false);
                         } else {
-                            JOptionPane.showMessageDialog(null, "No Student Deleted");
+                            JOptionPane.showMessageDialog(null, "No Semester Deleted");
                         }
                     } catch (IOException ex) {
                         ex.printStackTrace();
@@ -162,7 +161,7 @@ public class DeleteEnrolls extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Please enter a value");
             }
         } else if (e.getSource() == btnBack) {
-            StudentMainGUI.main(null);
+            SemesterMainGUI.main(null);
             this.setVisible(false);
         }
     }
