@@ -7,7 +7,6 @@ import okhttp3.Response;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import za.ac.cput.entity.tertiaryInstitution.Course;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -47,7 +46,6 @@ public class GetCourse extends JFrame implements ActionListener {
         getAll();
         table.setRowHeight(30);
         this.add(new JScrollPane(table));
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
         this.setSize(1000, 450);
         this.setLocationRelativeTo(null);
@@ -59,7 +57,6 @@ public class GetCourse extends JFrame implements ActionListener {
         model.addColumn("Course Code");
         model.addColumn("Title");
         model.addColumn("Department ID");
-        model.addColumn("Title");
         model.addColumn("Credit");
         model.addColumn("Duration");
         model.addColumn("Full Time");

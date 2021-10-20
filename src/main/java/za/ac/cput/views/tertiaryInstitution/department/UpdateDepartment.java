@@ -5,7 +5,6 @@ import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import za.ac.cput.entity.tertiaryInstitution.Department;
-import za.ac.cput.factory.tertiaryInstitution.DepartmentFactory;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -22,10 +21,10 @@ public class UpdateDepartment extends JFrame implements ActionListener {
     private JTable table;
     private JPanel pN, pC, pS, pFields, pUpdate;
     private JButton btnUpdate, btnBack, btnEnter;
-    private JLabel lblUpdate, blank1, blank2, blank3, blank4,
+    private JLabel blank1, blank2, blank3, blank4,
             blank5, blank6, blank7, blank8,
             lblDepId, lblDepName, lblDepDesc;
-    private JTextField txtUpdateId, txtDepId, txtDepName, txtDepDesc;
+    private JTextField txtDepId, txtDepName, txtDepDesc;
 
     public UpdateDepartment(){
         super("Update Department");
@@ -41,10 +40,12 @@ public class UpdateDepartment extends JFrame implements ActionListener {
         btnBack = new JButton("Back");
         btnEnter = new JButton("Enter");
 
-        lblUpdate = new JLabel("Enter Department ID to Update: ", SwingConstants.CENTER);
-        txtUpdateId = new JTextField();
-
+        lblDepId = new JLabel("Enter Department ID to Update: ", SwingConstants.CENTER);
         txtDepId = new JTextField();
+
+        lblDepName = new JLabel("Department Name: ");
+        lblDepDesc = new JLabel("Department Desc: ");
+
         txtDepName = new JTextField();
         txtDepDesc = new JTextField();
 
@@ -70,18 +71,18 @@ public class UpdateDepartment extends JFrame implements ActionListener {
         pUpdate.add(blank1);
         pUpdate.add(blank2);
         pUpdate.add(blank3);
-        pUpdate.add(lblUpdate);
-        pUpdate.add(txtUpdateId);
+        pUpdate.add(lblDepId);
+        pUpdate.add(txtDepId);
         pUpdate.add(btnEnter);
         pUpdate.add(blank4);
         pUpdate.add(blank5);
 
 //        pFields.add(lblDepId);
 //        pFields.add(txtDepId);
-//        pFields.add(lblDepName);
-//        pFields.add(txtDepName);
-//        pFields.add(lblDepDesc);
-//        pFields.add(txtDepDesc);
+        pFields.add(lblDepName);
+        pFields.add(txtDepName);
+        pFields.add(lblDepDesc);
+        pFields.add(txtDepDesc);
 
         pC.add(pUpdate);
         pC.add(pFields);
@@ -148,7 +149,7 @@ public class UpdateDepartment extends JFrame implements ActionListener {
     private Department getDepartment(String id) throws IOException{
         Department department = null;
         try {
-            final String URL = "http://localhost:8080/department/read/{id}" + id;
+            final String URL = "http://localhost:8080/department/read/" + id;
             String responseBody = run(URL);
             Gson gson = new Gson();
             department = gson.fromJson(responseBody, Department.class);
@@ -161,8 +162,12 @@ public class UpdateDepartment extends JFrame implements ActionListener {
 
     public void store(String DepId, String DepName, String DepDesc){
         try{
-            final String URL = "http://localhost:8080/department/create";
-            Department department = DepartmentFactory.build(DepId, DepName, DepDesc);
+            final String URL = "http://localhost:8080/department/update";
+            Department department = new Department.DepartmentBuilder()
+                    .setDepartmentId(txtDepId.getText())
+                    .setDepartmentName(txtDepName.getText())
+                    .setDepartmentDesc(txtDepDesc.getText())
+                    .build();
             Gson g = new Gson();
             String jsonString = g.toJson(department);
             String r = post(URL, jsonString);
@@ -190,9 +195,10 @@ public class UpdateDepartment extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()){
             case "Enter":
+                System.out.println(txtDepId.getText());
                 if (!Objects.equals(txtDepId.getText(), "")){
                     try {
-                        Department d = getDepartment((txtUpdateId.getText()));
+                        Department d = getDepartment((txtDepId.getText()));
                         if(d != null){
                             pFields.setVisible(true);
                             txtDepId.setText(d.getDepartmentId());

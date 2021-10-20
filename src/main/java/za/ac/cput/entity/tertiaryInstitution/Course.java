@@ -16,8 +16,8 @@ import javax.persistence.Table;
 public class Course {
 
     @Id
-    private String departmentId;
     private String courseCode;
+    private String departmentId;
     private String title;
     private int credit;
     private int duration;
@@ -62,7 +62,7 @@ public class Course {
     public String toString() {
         return "Course{" +
                 "courseCode='" + courseCode + '\'' +
-                ", title='" + title + '\'' +
+                ", title='" + title +
                 ", departmentID=" + departmentId +
                 ", credit=" + credit +
                 ", duration=" + duration +
