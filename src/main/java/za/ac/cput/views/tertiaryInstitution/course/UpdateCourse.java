@@ -1,4 +1,4 @@
-package za.ac.cput.views.tertiaryInstitution.Course;
+package za.ac.cput.views.tertiaryInstitution.course;
 
 import com.google.gson.Gson;
 import okhttp3.*;

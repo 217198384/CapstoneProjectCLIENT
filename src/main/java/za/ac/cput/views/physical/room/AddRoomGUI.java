@@ -95,7 +95,7 @@ public class AddRoomGUI extends JFrame implements ActionListener {
 
     public void store(String roomType, String roomCode, String stringRoomCapacity, String stringRoomFloor, String stringBuildingID) {
         try {
-            final String URL = "http://localhost:8080/room/create";
+            final String URL = "http://localhost:8080/room/createl";
             int roomCapacity = Integer.parseInt(stringRoomCapacity);
             int roomFloor = Integer.parseInt(stringRoomFloor);
             int buildingID = Integer.parseInt(stringBuildingID);

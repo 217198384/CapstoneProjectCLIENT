@@ -1,10 +1,10 @@
-package za.ac.cput.views.physical.room;
+package za.ac.cput.views.tertiaryInstitution.semester;
 
 import com.google.gson.Gson;
 import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import za.ac.cput.entity.physical.Room;
+import za.ac.cput.entity.tertiaryInstitution.Semester;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -14,21 +14,23 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.Objects;
 
-public class DeleteRoomGUI extends JFrame implements ActionListener {
+public class DeleteSemester extends JFrame implements ActionListener {
+    private static final OkHttpClient client = new OkHttpClient();
 
-    private static OkHttpClient client = new OkHttpClient();
+    private final JTable table;
+    private final JPanel pC;
+    private final JPanel pS;
+    private final JButton btnDelete;
+    private final JButton btnBack;
+    private final JLabel lblDelete;
+    private final JLabel blank1;
+    private final JLabel blank2;
+    private final JLabel blank3;
+    private final JLabel blank4;
+    private final JTextField txtDeleteId;
 
-    private JTable table;
-    private JPanel pC, pS;
-    private JButton btnDelete, btnBack;
-    private JLabel lblDelete, blank1, blank2, blank3, blank4;
-    private JTextField txtDeleteId;
-
-
-    public DeleteRoomGUI() {
-
-        super("Delete Rooms");
-
+    public DeleteSemester() {
+        super("Delete Enrolled Student");
         table = new JTable();
 
         pC = new JPanel();
@@ -37,7 +39,7 @@ public class DeleteRoomGUI extends JFrame implements ActionListener {
         btnDelete = new JButton("Delete");
         btnBack = new JButton("Back");
 
-        lblDelete = new JLabel(" Enter Room ID to Delete: ");
+        lblDelete = new JLabel(" Enter Student ID to Delete: ");
         txtDeleteId = new JTextField();
 
         blank1 = new JLabel("");
@@ -46,10 +48,20 @@ public class DeleteRoomGUI extends JFrame implements ActionListener {
         blank4 = new JLabel("");
     }
 
-    public void setGUI() {
+    private static String run(String url) throws IOException {
+        Request request = new Request.Builder().url(url).build();
+        try (Response response = client.newCall(request).execute()) {
+            return response.body().string();
+        }
+    }
 
-        pC.setLayout(new GridLayout(1,1));
-        pS.setLayout(new GridLayout(4,2));
+    public static void main(String[] args) {
+        new DeleteSemester().setGUI();
+    }
+
+    public void setGUI() {
+        pC.setLayout(new GridLayout(1, 1));
+        pS.setLayout(new GridLayout(4, 2));
 
         pC.add(table);
 
@@ -82,50 +94,40 @@ public class DeleteRoomGUI extends JFrame implements ActionListener {
     }
 
     public void displayTable() {
-
         DefaultTableModel model = (DefaultTableModel) table.getModel();
-        model.addColumn("Room Code");
-        model.addColumn("Room Type");
-        model.addColumn("Room Capacity");
-        model.addColumn("Room Floor");
-        model.addColumn("Building ID");
+        model.addColumn("Semester ID");
+        model.addColumn("Semester Start");
+        model.addColumn("Semester End");
+
 
         try {
-            final String URL = "http://localhost:8080/room/getalllect";
+            final String URL = "http://localhost:8080/enroll/getall";
             String responseBody = run(URL);
-            JSONArray rooms = new JSONArray(responseBody);
+            JSONArray semesters = new JSONArray(responseBody);
 
-            for (int i = 0; i < rooms.length(); i++) {
-                JSONObject room = rooms.getJSONObject(i);
+            for (int i = 0; i < semesters.length(); i++) {
+                JSONObject enroll = semesters.getJSONObject(i);
 
                 Gson g = new Gson();
-                Room r = g.fromJson(room.toString(), Room.class);
+                Semester s = g.fromJson(enroll.toString(), Semester.class);
 
-                Object[] rowData = new Object[5];
-                rowData[0] = r.getRoomCode();
-                rowData[1] = r.getRoomType();
-                rowData[2] = r.getRoomCapacity();
-                rowData[3] = r.getRoomFloor();
-                rowData[4] = r.getBuildingID();
+                Object[] rowData = new Object[3];
+                rowData[0] = s.getSemesterID();
+                rowData[1] = s.getSemesterStart();
+                rowData[2] = s.getSemesterEnd();
+
+
                 model.addRow(rowData);
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
-    private static String run(String url) throws IOException {
-        Request request = new Request.Builder().url(url).build();
-        try (Response response = client.newCall(request).execute()) {
-            return response.body().string();
-        }
-    }
-
     public boolean request(String id) throws IOException {
-        final String URL = "http://localhost:8080/room/createl/" + id;
+        final String URL = "http://localhost:8080/student/delete/" + id;
         RequestBody body = RequestBody
-                .create( "charset=utf-8", MediaType.parse("application/json"));
+                .create("charset=utf-8", MediaType.parse("application/json"));
         Request request = new Request.Builder()
                 .post(body)
                 .addHeader("Accept", "application/json")
@@ -138,18 +140,17 @@ public class DeleteRoomGUI extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
         if (e.getSource() == btnDelete) {
             if (!Objects.equals(txtDeleteId.getText(), "")) {
-                int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete?", "Delete Building", JOptionPane.YES_NO_OPTION);
+                int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete?", "Delete Semester", JOptionPane.YES_NO_OPTION);
                 if (result == JOptionPane.YES_OPTION) {
                     try {
-                        if(request(txtDeleteId.getText())) {
-                            JOptionPane.showMessageDialog(null,"Room Deleted");
-                            RoomMainGUI.main(null);
+                        if (request(txtDeleteId.getText())) {
+                            JOptionPane.showMessageDialog(null, "Semester Deleted");
+                            SemesterMainGUI.main(null);
                             this.setVisible(false);
                         } else {
-                            JOptionPane.showMessageDialog(null,"Problem, Building Not Deleted");
+                            JOptionPane.showMessageDialog(null, "No Semester Deleted");
                         }
                     } catch (IOException ex) {
                         ex.printStackTrace();
@@ -159,13 +160,10 @@ public class DeleteRoomGUI extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Please enter a value");
             }
         } else if (e.getSource() == btnBack) {
-            RoomMainGUI.main(null);
+            SemesterMainGUI.main(null);
             this.setVisible(false);
         }
     }
 
-    public static void main(String[] args) {
-
-        new DeleteRoomGUI().setGUI();
-    }
 }
+

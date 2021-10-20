@@ -63,7 +63,7 @@ public class GetRoomGUI extends JFrame implements ActionListener {
         model.addColumn("Building ID");
 
         try {
-            final String URL = "http://localhost:8080/room/getall";
+            final String URL = "http://localhost:8080/room/getalllect";
             String responseBody = run(URL);
             JSONArray rooms = new JSONArray(responseBody);
 

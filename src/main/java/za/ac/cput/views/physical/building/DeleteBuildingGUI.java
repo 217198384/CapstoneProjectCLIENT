@@ -89,7 +89,7 @@ public class DeleteBuildingGUI extends JFrame implements ActionListener {
         model.addColumn("Room Count");
 
         try {
-            final String URL = "http://localhost:8080/building/getall";
+            final String URL = "http://localhost:8080/building/getalllect";
             String responseBody = run(URL);
             JSONArray buildings = new JSONArray(responseBody);
 
@@ -120,7 +120,7 @@ public class DeleteBuildingGUI extends JFrame implements ActionListener {
     }
 
     public boolean request(String id) throws IOException {
-        final String URL = "http://localhost:8080/building/delete/" + id;
+        final String URL = "http://localhost:8080/building/deletelect/" + id;
         RequestBody body = RequestBody
                 .create( "charset=utf-8", MediaType.parse("application/json"));
         Request request = new Request.Builder()

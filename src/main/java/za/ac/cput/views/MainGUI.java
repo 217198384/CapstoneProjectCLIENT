@@ -7,14 +7,16 @@ package za.ac.cput.views;
  * 17 October 2021
  */
 
+import za.ac.cput.views.tertiaryInstitution.enroll.EnrollMainGUI;
+import za.ac.cput.views.tertiaryInstitution.semester.SemesterMainGUI;
 import za.ac.cput.views.curriculum.examination.ExaminationMainGUI;
 import za.ac.cput.views.curriculum.scheduledClass.ScheduledClassMainGUI;
 import za.ac.cput.views.person.lecturer.LecturerMenuGUI;
 import za.ac.cput.views.physical.building.BuildingMainGUI;
 import za.ac.cput.views.physical.room.RoomMainGUI;
 import za.ac.cput.views.person.student.StudentMainGUI;
-import za.ac.cput.views.tertiaryInstitution.Course.CourseMainGUI;
-import za.ac.cput.views.tertiaryInstitution.Department.DepartmentMainGUI;
+import za.ac.cput.views.tertiaryInstitution.course.CourseMainGUI;
+import za.ac.cput.views.tertiaryInstitution.department.DepartmentMainGUI;
 import za.ac.cput.views.curriculum.subject.SubjectMenuGUI;
 
 import javax.swing.*;
@@ -116,6 +118,8 @@ public class MainGUI extends JFrame implements ActionListener {
                 this.setVisible(false);
                 break;
             case "Enroll":
+                EnrollMainGUI.main(null);
+                this.setVisible(false);
                 break;
             case "Examination":
                 ExaminationMainGUI.main(null);
@@ -134,6 +138,8 @@ public class MainGUI extends JFrame implements ActionListener {
                 this.setVisible(false);
                 break;
             case "Semester":
+                SemesterMainGUI.main(null);
+                this.setVisible(false);
                 break;
             case "Student":
                 StudentMainGUI.main(null);
