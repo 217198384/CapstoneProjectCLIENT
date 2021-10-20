@@ -19,9 +19,9 @@ class EnrollFactoryTest {
 
     @Test
     void Enroll() {
-        //Date date = new Date();
+
         Date d1 = new Date(2021,06,11);
-        Enroll build = EnrollFactory.build("20201ABC","ADP467",d1,true);
+        Enroll build = EnrollFactory.build("20201ABC","ADP467","28/02/2021","Yes");
         System.out.print(build);
         assertNotNull(build);
         assertEquals(build,build);

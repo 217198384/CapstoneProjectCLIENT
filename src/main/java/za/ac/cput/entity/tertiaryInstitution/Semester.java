@@ -1,5 +1,7 @@
 package za.ac.cput.entity.tertiaryInstitution;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Date;
 
 /**
@@ -8,10 +10,17 @@ import java.util.Date;
  * Author: Tisetso Kotoana
  * Date:01 June 2021
  */
+@Entity
 public class Semester {
+
+   @Id
    private String semesterID;
    private Date semesterStart;
    private Date semesterEnd;
+
+   public Semester(){
+
+   }
 
    public Semester(SemesterBuilder semester) {
       this.semesterID = semester.semesterID;
