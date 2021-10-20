@@ -1,5 +1,11 @@
 package za.ac.cput.views.curriculum.subject;
 
+/**
+ * DeleteSubject.java
+ * Author: Shane Knoll (218279124)
+ * Date: 20 October 2021
+ */
+
 import okhttp3.*;
 
 
