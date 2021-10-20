@@ -1,4 +1,12 @@
 package za.ac.cput.views.person.lecturer;
+
+/**
+ * LecturerMainGUI.java
+ * Author: Shane Knoll (218279124)
+ * Date: 20 October 2021
+ */
+
+
 import za.ac.cput.views.MainGUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;

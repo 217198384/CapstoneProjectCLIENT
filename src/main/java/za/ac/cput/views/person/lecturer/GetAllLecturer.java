@@ -1,5 +1,12 @@
 package za.ac.cput.views.person.lecturer;
 
+/**
+ * GetAllLecturer.java
+ * Author: Shane Knoll (218279124)
+ * Date: 20 October 2021
+ */
+
+
 import com.google.gson.Gson;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
