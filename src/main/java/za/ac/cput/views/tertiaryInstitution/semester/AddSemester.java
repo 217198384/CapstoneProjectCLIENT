@@ -1,10 +1,9 @@
-package za.ac.cput.views.semester;
+package za.ac.cput.views.tertiaryInstitution.semester;
 
 import com.google.gson.Gson;
 import okhttp3.*;
 import za.ac.cput.entity.tertiaryInstitution.Semester;
 import za.ac.cput.factory.tertiaryInstitution.SemesterFactory;
-import za.ac.cput.views.enroll.EnrollMainGUI;
 
 import javax.swing.*;
 import java.awt.*;

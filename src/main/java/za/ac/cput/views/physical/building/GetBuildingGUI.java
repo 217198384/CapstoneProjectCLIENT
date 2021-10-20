@@ -62,7 +62,7 @@ public class GetBuildingGUI extends JFrame implements ActionListener {
         model.addColumn("Building Address");
 
         try {
-            final String URL = "http://localhost:8080/building/getall";
+            final String URL = "http://localhost:8080/building/getalllect";
             String responseBody = run(URL);
             JSONArray buildings = new JSONArray(responseBody);
 

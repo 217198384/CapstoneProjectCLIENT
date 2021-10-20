@@ -1,12 +1,11 @@
-package za.ac.cput.views.semester;
+package za.ac.cput.views.tertiaryInstitution.semester;
 
 import com.google.gson.Gson;
 import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import za.ac.cput.entity.tertiaryInstitution.Semester;
-import za.ac.cput.views.enroll.EnrollMainGUI;
-import za.ac.cput.views.student.StudentMainGUI;
+import za.ac.cput.views.tertiaryInstitution.enroll.EnrollMainGUI;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

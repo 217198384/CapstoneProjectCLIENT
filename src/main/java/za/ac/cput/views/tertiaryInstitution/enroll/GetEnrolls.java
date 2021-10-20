@@ -1,4 +1,4 @@
-package za.ac.cput.views.enroll;
+package za.ac.cput.views.tertiaryInstitution.enroll;
 
 import com.google.gson.Gson;
 import okhttp3.OkHttpClient;

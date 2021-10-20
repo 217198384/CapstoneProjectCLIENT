@@ -1,11 +1,10 @@
-package za.ac.cput.views.enroll;
+package za.ac.cput.views.tertiaryInstitution.enroll;
 
 import com.google.gson.Gson;
 import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import za.ac.cput.entity.tertiaryInstitution.Enroll;
-import za.ac.cput.views.student.StudentMainGUI;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -149,7 +148,7 @@ public class DeleteEnrolls extends JFrame implements ActionListener {
                     try {
                         if (request(txtDeleteId.getText())) {
                             JOptionPane.showMessageDialog(null, "Student Deleted");
-                            StudentMainGUI.main(null);
+                            EnrollMainGUI.main(null);
                             this.setVisible(false);
                         } else {
                             JOptionPane.showMessageDialog(null, "No Student Deleted");
@@ -162,7 +161,7 @@ public class DeleteEnrolls extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Please enter a value");
             }
         } else if (e.getSource() == btnBack) {
-            StudentMainGUI.main(null);
+            EnrollMainGUI.main(null);
             this.setVisible(false);
         }
     }

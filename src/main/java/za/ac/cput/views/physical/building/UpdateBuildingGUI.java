@@ -127,7 +127,7 @@ public class UpdateBuildingGUI extends JFrame implements ActionListener {
         model.addColumn("Room Count");
 
         try {
-            final String URL = "http://localhost:8080/building/getall";
+            final String URL = "http://localhost:8080/building/getalllect";
             String responseBody = run(URL);
             JSONArray buildings = new JSONArray(responseBody);
 
@@ -160,7 +160,7 @@ public class UpdateBuildingGUI extends JFrame implements ActionListener {
     private Building getBuilding(String id) throws IOException {
         Building building = null;
         try {
-            final String URL = "http://localhost:8080/buiding/read/" + id;
+            final String URL = "http://localhost:8080/buiding/readlect/" + id;
             String responseBody = run(URL);
             Gson gson = new Gson();
             building = gson.fromJson(responseBody, Building.class);
@@ -174,7 +174,7 @@ public class UpdateBuildingGUI extends JFrame implements ActionListener {
     public void store(String buildingID, String buildingName, String buildingAddress, String stringRoomCount) {
         Building building = null;
         try {
-            final String URL = "http://localhost:8080/building/update";
+            final String URL = "http://localhost:8080/building/updatelect";
             int roomCount = Integer.parseInt(stringRoomCount);
             building = new Building.BuildingBuilder()
                     .setBuildingID(txtUpdateId.getText())
