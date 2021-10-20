@@ -1,11 +1,10 @@
-package za.ac.cput.factory.physical;
-
-import za.ac.cput.entity.physical.Room;
-
 /**
  * author: Llewelyn Klaase
  * student no: 216267072
  */
+package za.ac.cput.factory.physical;
+
+import za.ac.cput.entity.physical.Room;
 
 public class RoomFactory {
 
@@ -14,6 +13,6 @@ public class RoomFactory {
         if(roomType.isEmpty() || roomCode.isEmpty() || roomCapacity <= 0 || roomFloor <= 0 || buildingID <= 0)
             return null;
 
-        return new Room.RoomBuilder().setRoomType(roomType).setRoomCode(roomCode).setRoomCapacity(roomCapacity).setRoomFloor(roomFloor).setBuildingID(buildingID).build();
+        return new Room.RoomBuilder().setRoomCode(roomCode).setRoomType(roomType).setRoomCapacity(roomCapacity).setRoomFloor(roomFloor).setBuildingID(buildingID).build();
     }
 }

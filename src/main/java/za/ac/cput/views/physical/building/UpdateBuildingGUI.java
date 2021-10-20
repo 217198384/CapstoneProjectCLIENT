@@ -1,3 +1,7 @@
+/**
+ * author: Llewelyn Klaase
+ * student no: 216267072
+ */
 package za.ac.cput.views.physical.building;
 
 import com.google.gson.Gson;
@@ -127,7 +131,7 @@ public class UpdateBuildingGUI extends JFrame implements ActionListener {
         model.addColumn("Room Count");
 
         try {
-            final String URL = "http://localhost:8080/building/getalllect";
+            final String URL = "http://localhost:8080/building/getall";
             String responseBody = run(URL);
             JSONArray buildings = new JSONArray(responseBody);
 
@@ -160,7 +164,7 @@ public class UpdateBuildingGUI extends JFrame implements ActionListener {
     private Building getBuilding(String id) throws IOException {
         Building building = null;
         try {
-            final String URL = "http://localhost:8080/buiding/readlect/" + id;
+            final String URL = "http://localhost:8080/buiding/read/" + id;
             String responseBody = run(URL);
             Gson gson = new Gson();
             building = gson.fromJson(responseBody, Building.class);
@@ -174,7 +178,7 @@ public class UpdateBuildingGUI extends JFrame implements ActionListener {
     public void store(String buildingID, String buildingName, String buildingAddress, String stringRoomCount) {
         Building building = null;
         try {
-            final String URL = "http://localhost:8080/building/updatelect";
+            final String URL = "http://localhost:8080/building/update";
             int roomCount = Integer.parseInt(stringRoomCount);
             building = new Building.BuildingBuilder()
                     .setBuildingID(txtUpdateId.getText())
@@ -191,7 +195,7 @@ public class UpdateBuildingGUI extends JFrame implements ActionListener {
                 BuildingMainGUI.main(null);
                 this.setVisible(false);
             } else {
-                JOptionPane.showMessageDialog(null, "Oops, Student not updated.");
+                JOptionPane.showMessageDialog(null, "Oops, Building not updated.");
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -213,7 +217,7 @@ public class UpdateBuildingGUI extends JFrame implements ActionListener {
             case "Enter" :
                 if (!Objects.equals(txtUpdateId.getText(), "")) {
                     try {
-                        Building b = getBuilding(null);
+                        Building b = getBuilding(txtBuildingID.getText());
                         if(b != null) {
                             pFields.setVisible(true);
                             txtBuildingID.setText(b.getBuildingID());
@@ -221,13 +225,13 @@ public class UpdateBuildingGUI extends JFrame implements ActionListener {
                             txtBuildingAddress.setText(b.getBuildingAddress());
                             txtRoomCount.setText(String.valueOf(b.getRoomCount()));
                         } else {
-                            JOptionPane.showMessageDialog(null, "No Student with that ID");
+                            JOptionPane.showMessageDialog(null, "No Building with that ID");
                         }
                     } catch (IOException ex) {
                         ex.printStackTrace();
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Please enter a valid Student ID");
+                    JOptionPane.showMessageDialog(null, "Please enter a valid Building ID");
                 }
                 break;
             case "Update" :

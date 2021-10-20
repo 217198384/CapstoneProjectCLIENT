@@ -1,3 +1,7 @@
+/**
+ * author: Llewelyn Klaase
+ * student no: 216267072
+ */
 package za.ac.cput.views.physical.room;
 
 import com.google.gson.Gson;
@@ -63,7 +67,7 @@ public class GetRoomGUI extends JFrame implements ActionListener {
         model.addColumn("Building ID");
 
         try {
-            final String URL = "http://localhost:8080/room/getalllect";
+            final String URL = "http://localhost:8080/room/getall";
             String responseBody = run(URL);
             JSONArray rooms = new JSONArray(responseBody);
 
@@ -74,8 +78,8 @@ public class GetRoomGUI extends JFrame implements ActionListener {
                 Room r = g.fromJson(room.toString(), Room.class);
 
                 Object[] rowData = new Object[5];
-                rowData[0] = r.getRoomCode();
-                rowData[1] = r.getRoomType();
+                rowData[0] = r.getRoomType();
+                rowData[1] = r.getRoomCode();
                 rowData[2] = r.getRoomCapacity();
                 rowData[3] = r.getRoomFloor();
                 rowData[4] = r.getBuildingID();

@@ -1,3 +1,7 @@
+/**
+ * author: Llewelyn Klaase
+ * student no: 216267072
+ */
 package za.ac.cput.views.physical.room;
 
 import com.google.gson.Gson;
@@ -132,7 +136,7 @@ public class UpdateRoomGUI extends JFrame implements ActionListener {
         model.addColumn("Building ID");
 
         try {
-            final String URL = "http://localhost:8080/room/getalllect";
+            final String URL = "http://localhost:8080/room/getall";
             String responseBody = run(URL);
             JSONArray rooms = new JSONArray(responseBody);
 
@@ -143,8 +147,8 @@ public class UpdateRoomGUI extends JFrame implements ActionListener {
                 Room r = g.fromJson(room.toString(), Room.class);
 
                 Object[] rowData = new Object[5];
-                rowData[0] = r.getRoomCode();
-                rowData[1] = r.getRoomType();
+                rowData[0] = r.getRoomType();
+                rowData[1] = r.getRoomCode();
                 rowData[2] = r.getRoomCapacity();
                 rowData[3] = r.getRoomFloor();
                 rowData[4] = r.getBuildingID();
@@ -166,7 +170,7 @@ public class UpdateRoomGUI extends JFrame implements ActionListener {
     private Room getRoom(String id) throws IOException {
         Room room = null;
         try {
-            final String URL = "http://localhost:8080/room/readlect/" + id;
+            final String URL = "http://localhost:8080/room/read/" + id;
             String responseBody = run(URL);
             Gson gson = new Gson();
             room = gson.fromJson(responseBody, Room.class);
@@ -180,7 +184,7 @@ public class UpdateRoomGUI extends JFrame implements ActionListener {
     public void store(String roomCode, String roomType, String stringRoomCapacity, String stringRoomFloor, String stringBuildingID) {
         Room room = null;
         try {
-            final String URL = "http://localhost:8080/room/updatelect";
+            final String URL = "http://localhost:8080/room/update";
             int roomCapacity = Integer.parseInt(stringRoomCapacity);
             int buildingID = Integer.parseInt(stringBuildingID);
             int roomFloor = Integer.parseInt(stringRoomFloor);
@@ -232,13 +236,13 @@ public class UpdateRoomGUI extends JFrame implements ActionListener {
                             txtRoomFloor.setText(String.valueOf(r.getRoomFloor()));
                             txtBuildingID.setText(String.valueOf(r.getBuildingID()));
                         } else {
-                            JOptionPane.showMessageDialog(null, "No Student with that ID");
+                            JOptionPane.showMessageDialog(null, "No Room with that ID");
                         }
                     } catch (IOException ex) {
                         ex.printStackTrace();
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Please enter a valid Student ID");
+                    JOptionPane.showMessageDialog(null, "Please enter a valid Room ID");
                 }
                 break;
             case "Update" :
