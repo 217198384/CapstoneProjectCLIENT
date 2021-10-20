@@ -7,6 +7,7 @@ package za.ac.cput.views;
  * 17 October 2021
  */
 
+import za.ac.cput.views.enroll.EnrollMainGUI;
 import za.ac.cput.views.physical.BuildingMainGUI;
 import za.ac.cput.views.physical.RoomMainGUI;
 import za.ac.cput.views.student.StudentMainGUI;
@@ -106,6 +107,8 @@ public class MainGUI extends JFrame implements ActionListener {
             case "Department":
                 break;
             case "Enroll":
+                EnrollMainGUI.main(null);
+                this.setVisible(false);
                 break;
             case "Examination":
                 break;
